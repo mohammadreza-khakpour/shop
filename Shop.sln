@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shop.Entities", "Shop.Entities\Shop.Entities.csproj", "{CE8B42D1-2703-4B47-8D11-C21D20E5AA16}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shop.Entities", "Shop.Entities\Shop.Entities.csproj", "{CE8B42D1-2703-4B47-8D11-C21D20E5AA16}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shop.Migration", "Shop.Migration\Shop.Migration.csproj", "{4FC7A105-D273-4BDC-A6B2-EEAC0566A4E3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shop.Migration", "Shop.Migration\Shop.Migration.csproj", "{F55165C5-D627-4C6E-B7E0-D2B889AEB4A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{CE8B42D1-2703-4B47-8D11-C21D20E5AA16}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE8B42D1-2703-4B47-8D11-C21D20E5AA16}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE8B42D1-2703-4B47-8D11-C21D20E5AA16}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4FC7A105-D273-4BDC-A6B2-EEAC0566A4E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4FC7A105-D273-4BDC-A6B2-EEAC0566A4E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4FC7A105-D273-4BDC-A6B2-EEAC0566A4E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4FC7A105-D273-4BDC-A6B2-EEAC0566A4E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F55165C5-D627-4C6E-B7E0-D2B889AEB4A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F55165C5-D627-4C6E-B7E0-D2B889AEB4A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F55165C5-D627-4C6E-B7E0-D2B889AEB4A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F55165C5-D627-4C6E-B7E0-D2B889AEB4A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
