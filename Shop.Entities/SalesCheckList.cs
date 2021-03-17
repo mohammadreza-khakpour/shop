@@ -9,7 +9,7 @@ namespace Shop.Entities
         public int Id { get; set; }
         public string SerialNumber { get; set; }
         public DateTime RecordDate { get; set; }
-        public List<SalesItem> Items { get; set; }
-        public List<AccountingDocument> Documents { get; set; }
+        public HashSet<SalesItem> Items { get; set; }
+        public HashSet<AccountingDocument> Documents { get; set; }
     }
 }
