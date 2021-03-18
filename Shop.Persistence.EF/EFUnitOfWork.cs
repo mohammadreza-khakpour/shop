@@ -7,10 +7,14 @@ namespace Shop.Persistence.EF
 {
     public class EFUnitOfWork : UnitOfWork 
     {
-        private 
+        private EFDataContext _dBContext;
+        public EFUnitOfWork(EFDataContext dBContext)
+        {
+            _dBContext = dBContext;
+        }
         public void Complete()
         {
-
+            _dBContext.SaveChanges();
         }
     }
 }

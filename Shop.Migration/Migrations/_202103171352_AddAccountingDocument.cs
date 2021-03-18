@@ -17,6 +17,7 @@ namespace Shop.Migration.Migrations
         public override void Up()
         {
             Create.Table("AccountingDocuments")
+                .WithColumn("Id").AsInt32().PrimaryKey().Identity()
                 .WithColumn("CreationDate").AsDateTime()
                 .WithColumn("SerialNumber").AsString(20).Unique()
                 .WithColumn("SalesCheckListId").AsInt32()
