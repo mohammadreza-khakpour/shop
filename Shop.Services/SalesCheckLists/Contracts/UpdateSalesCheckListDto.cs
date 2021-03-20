@@ -1,10 +1,9 @@
 ﻿using System;
 
-namespace Shop.Services.SalesCheckLists.Contracts
+namespace Shop.Services.SalesCheckLists
 {
-    public class GetSalesCheckListDto
+    public class UpdateSalesCheckListDto
     {
-        public int Id { get; set; }
         public string SerialNumber { get; set; }
         public DateTime RecordDate { get; set; }
     }

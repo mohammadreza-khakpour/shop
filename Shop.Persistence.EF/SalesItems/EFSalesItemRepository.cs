@@ -1,4 +1,5 @@
 ﻿using Shop.Entities;
+using Shop.Services.SalesItems.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +18,10 @@ namespace Shop.Persistence.EF.SalesItems
         {
             return _dbContext.SalesItems.Add(salesItem).Entity.Id;
         }
-        public void Delete(SalesItem salesItem)
+        public void Delete(int id)
         {
-            _dbContext.SalesItems.Remove(salesItem);
+            var res = Find(id);
+            _dbContext.SalesItems.Remove(res);
         }
         public List<GetSalesItemDto> GetAll()
         {
@@ -41,6 +43,11 @@ namespace Shop.Persistence.EF.SalesItems
                 ProductId = result.ProductId,
                 SalesChecklistId = result.SalesChecklistId
             };
+        }
+
+        public SalesItem Find(int id)
+        {
+            return _dbContext.SalesItems.Find(id);
         }
     }
 }

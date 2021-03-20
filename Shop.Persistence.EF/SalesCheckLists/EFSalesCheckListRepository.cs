@@ -1,4 +1,5 @@
 ﻿using Shop.Entities;
+using Shop.Services.SalesCheckLists.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +19,10 @@ namespace Shop.Persistence.EF.SalesCheckLists
             var result = _dBContext.SalesCheckLists.Add(salesCheckList);
             return result.Entity.Id;
         }
-        public void Delete(SalesCheckList salesCheckList)
+        public void Delete(int id)
         {
-            _dBContext.SalesCheckLists.Remove(salesCheckList);
+            var res = Find(id);
+            _dBContext.SalesCheckLists.Remove(res);
         }
         public List<GetSalesCheckListDto> GetAll()
         {
@@ -40,6 +42,10 @@ namespace Shop.Persistence.EF.SalesCheckLists
                 RecordDate = result.RecordDate,
                 SerialNumber = result.SerialNumber
             };
+        }
+        public SalesCheckList Find(int id)
+        {
+            return _dBContext.SalesCheckLists.Find(id);
         }
     }
 }

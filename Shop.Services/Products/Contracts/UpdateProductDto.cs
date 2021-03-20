@@ -8,6 +8,6 @@ namespace Shop.Services.Products
         public string Code { get; set; }
         public int MinimumAmount { get; set; }
         public int ProductCategoryId { get; set; }
-        public Status Status { get; set; }
+        public bool IsSufficientInStore { get; set; }
     }
 }

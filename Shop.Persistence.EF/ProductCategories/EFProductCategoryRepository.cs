@@ -1,4 +1,5 @@
 ﻿using Shop.Entities;
+using Shop.Services.ProductCategories.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;

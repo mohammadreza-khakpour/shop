@@ -38,7 +38,8 @@ namespace Shop.Persistence.EF.Products
                 Title = _.Title,
                 Code = _.Code,
                 MinimumAmount = _.MinimumAmount,
-                ProductCategoryId = _.ProductCategoryId
+                ProductCategoryId = _.ProductCategoryId,
+                IsSufficientInStore = _.IsSufficientInStore
             }).ToList();
         }
 
@@ -51,7 +52,8 @@ namespace Shop.Persistence.EF.Products
                 Title = result.Title,
                 Code = result.Code,
                 MinimumAmount = result.MinimumAmount,
-                ProductCategoryId = result.ProductCategoryId
+                ProductCategoryId = result.ProductCategoryId,
+                IsSufficientInStore = result.IsSufficientInStore
             };
         }
     }

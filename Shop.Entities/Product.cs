@@ -4,11 +4,6 @@ using System.Text;
 
 namespace Shop.Entities
 {
-    public enum Status
-    {
-        Insufficient,
-        InOrder
-    }
     public class Product
     {
         public int Id { get; set; }
@@ -18,6 +13,6 @@ namespace Shop.Entities
         public int ProductCategoryId { get; set; }
         public ProductCategory ProductCategory { get; set; }
         public HashSet<Warehouse> Warehouses { get; set; }
-        public Status Status { get; set; }
+        public bool IsSufficientInStore { get; set; } = true;
     }
 }

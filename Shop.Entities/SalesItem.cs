@@ -10,7 +10,6 @@ namespace Shop.Entities
         public int ProductCount { get; set; }
         public int ProductId { get; set; }
         public Product Product { get; set; }
-
         public int SalesChecklistId { get; set; }
         public SalesCheckList SalesChecklist { get; set; }
 

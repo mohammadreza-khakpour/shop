@@ -23,7 +23,7 @@ namespace Shop.Services.Products
                 Code = dto.Code,
                 MinimumAmount = dto.MinimumAmount,
                 ProductCategoryId = dto.ProductCategoryId,
-                Title = dto.Title
+                Title = dto.Title,
             };
             var recordId = _productRepository.Add(product);
             _unitOfWork.Complete();
@@ -36,7 +36,7 @@ namespace Shop.Services.Products
             res.MinimumAmount = dto.MinimumAmount;
             res.ProductCategoryId = dto.ProductCategoryId;
             res.Title = dto.Title;
-            res.Status = dto.Status;
+            res.IsSufficientInStore = dto.IsSufficientInStore;
             _unitOfWork.Complete();
         }
         public void Delete(int id)

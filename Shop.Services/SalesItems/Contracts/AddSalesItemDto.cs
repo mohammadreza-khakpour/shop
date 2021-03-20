@@ -1,8 +1,7 @@
-﻿namespace Shop.Services.SalesItems.Contracts
+﻿namespace Shop.Services.SalesItems
 {
-    public class GetSalesItemDto
+    public class AddSalesItemDto
     {
-        public int Id { get; set; }
         public int ProductCount { get; set; }
         public int ProductId { get; set; }
         public int SalesChecklistId { get; set; }

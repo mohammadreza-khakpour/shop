@@ -1,4 +1,6 @@
-﻿namespace Shop.Services.AccountingDocuments
+﻿using System;
+
+namespace Shop.Services.AccountingDocuments
 {
     public class AddAccountingDocumentDto
     {

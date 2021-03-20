@@ -26,7 +26,7 @@ namespace Shop.Persistence.EF.AccountingDocuments
             var accountingDocument = Find(id);
             _dBContext.AccountingDocuments.Remove(accountingDocument);
         }
-        private AccountingDocument Find(int id)
+        public AccountingDocument Find(int id)
         {
             return _dBContext.AccountingDocuments.Find(id);
         }

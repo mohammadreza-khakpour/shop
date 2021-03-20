@@ -1,12 +1,13 @@
 ﻿using Shop.Entities;
 using System.Collections.Generic;
 
-namespace Shop.Persistence.EF.SalesItems
+namespace Shop.Services.SalesItems.Contracts
 {
     public interface SalesItemRepository
     {
         int Add(SalesItem salesItem);
-        void Delete(SalesItem salesItem);
+        void Delete(int id);
+        SalesItem Find(int id);
         GetSalesItemDto FindOneById(int id);
         List<GetSalesItemDto> GetAll();
     }
