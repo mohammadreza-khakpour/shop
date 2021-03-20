@@ -1,4 +1,4 @@
-﻿namespace Shop.Persistence.EF.Products
+﻿namespace Shop.Services.Products.Contracts
 {
     public class GetProductDto
     {

@@ -52,5 +52,6 @@ namespace Shop.Persistence.EF.AccountingDocuments
                 SerialNumber = result.SerialNumber
             };
         }
+
     }
 }

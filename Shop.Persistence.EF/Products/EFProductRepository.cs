@@ -1,4 +1,5 @@
 ﻿using Shop.Entities;
+using Shop.Services.Products.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,11 +21,15 @@ namespace Shop.Persistence.EF.Products
             return result.Entity.Id;
         }
 
-        public void Delete(Product product)
+        public void Delete(int id)
         {
-            _dBContext.Products.Remove(product);
+            var res = Find(id);
+            _dBContext.Products.Remove(res);
         }
-
+        public Product Find(int id)
+        {
+            return _dBContext.Products.Find(id);
+        }
         public List<GetProductDto> GetAll()
         {
             return _dBContext.Products.Select(_ => new GetProductDto

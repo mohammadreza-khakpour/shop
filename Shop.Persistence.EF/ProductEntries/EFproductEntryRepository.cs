@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Shop.Entities;
+using Shop.Services.ProductEntries.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Text;
 
 namespace Shop.Persistence.EF.ProductEntries
 {
-    public class EFproductEntryRepository : productEntryRepository
+    public class EFproductEntryRepository : ProductEntryRepository
     {
         private EFDataContext _dBContext;
         public EFproductEntryRepository(EFDataContext dBContext)
@@ -22,11 +23,15 @@ namespace Shop.Persistence.EF.ProductEntries
             return result.Entity.Id;
         }
 
-        public void Delete(ProductEntry productEntry)
+        public void Delete(int id)
         {
-            _dBContext.ProductEntries.Remove(productEntry);
+            var res = Find(id);
+            _dBContext.ProductEntries.Remove(res);
         }
-
+        private ProductEntry Find(int id)
+        {
+            return _dBContext.ProductEntries.Find(id);
+        }
         public List<GetProductEntryDto> GetAll()
         {
             return _dBContext.ProductEntries.Select(_ => new GetProductEntryDto

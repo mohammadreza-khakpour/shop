@@ -33,7 +33,7 @@ namespace Shop.Services.AccountingDocuments
         }
         public void Update(int id, UpdateAccountingDocumentDto dto)
         {
-            var foundedItem = _accountingDocumentRepository.FindOneById(id);
+            var foundedItem = _accountingDocumentRepository.Find(id);
             foundedItem.CreationDate = dto.CreationDate;
             foundedItem.SalesCheckListId = dto.SalesCheckListId;
             foundedItem.SerialNumber = dto.SerialNumber;
