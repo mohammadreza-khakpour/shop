@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Shop.Persistence.EF.AccountingDocuments
+namespace Shop.Services.AccountingDocuments.Contracts
 {
     public class GetAccountingDocumentDto
     {

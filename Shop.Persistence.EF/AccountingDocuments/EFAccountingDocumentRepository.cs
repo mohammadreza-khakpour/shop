@@ -1,4 +1,5 @@
 ﻿using Shop.Entities;
+using Shop.Services.AccountingDocuments.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Text;
 
 namespace Shop.Persistence.EF.AccountingDocuments
 {
-    public class EFAccountingDocumentRepository
+    public class EFAccountingDocumentRepository : AccountingDocumentRepository
     {
         private EFDataContext _dBContext;
         public EFAccountingDocumentRepository(EFDataContext dBContext)
@@ -20,11 +21,15 @@ namespace Shop.Persistence.EF.AccountingDocuments
             return result.Entity.Id;
         }
 
-        public void Delete(AccountingDocument accountingDocument)
+        public void Delete(int id)
         {
+            var accountingDocument = Find(id);
             _dBContext.AccountingDocuments.Remove(accountingDocument);
         }
-
+        private AccountingDocument Find(int id)
+        {
+            return _dBContext.AccountingDocuments.Find(id);
+        }
         public List<GetAccountingDocumentDto> GetAll()
         {
             return _dBContext.AccountingDocuments.Select(_ => new GetAccountingDocumentDto

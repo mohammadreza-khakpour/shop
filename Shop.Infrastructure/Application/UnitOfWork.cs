@@ -6,5 +6,6 @@ namespace Shop.Infrastructure
 {
     public interface UnitOfWork
     {
+        public void Complete();
     }
 }
