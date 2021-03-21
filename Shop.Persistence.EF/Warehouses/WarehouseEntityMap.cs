@@ -13,7 +13,8 @@ namespace Shop.Persistence.EF.Warehouses
         {
             builder.HasKey(_=>_.Id);
             builder.Property(_ => _.ProductCount);
-            builder.HasOne(_=>_.Product);
+            builder.HasOne(_ => _.Product).WithMany(_ => _.Warehouses)
+                .HasForeignKey(_ => _.ProductId).OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

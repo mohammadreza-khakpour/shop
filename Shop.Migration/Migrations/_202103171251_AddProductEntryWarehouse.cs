@@ -23,13 +23,15 @@ namespace Shop.Migration.Migrations
                 .WithColumn("ProductCount").AsInt32().NotNullable()
                 .WithColumn("EntryDate").AsDateTime()
                 .WithColumn("EntrySerialNumber").AsString(20).Unique()
-                .WithColumn("ProductId").AsInt32().ForeignKey("FK_ProductEntries_Products", "Products", "Id")
+                .WithColumn("ProductId").AsInt32()
+                .ForeignKey("FK_ProductEntries_Products", "Products", "Id")
                 .OnDelete(System.Data.Rule.None);
 
             Create.Table("Warehouses")
                 .WithColumn("Id").AsInt32().PrimaryKey().Identity()
                 .WithColumn("ProductCount").AsInt32()
-                .WithColumn("ProductId").AsInt32().ForeignKey("FK_Warehouses_Products", "Products", "Id")
+                .WithColumn("ProductId").AsInt32()
+                .ForeignKey("FK_Warehouses_Products", "Products", "Id")
                 .OnDelete(System.Data.Rule.None);
         }
     }

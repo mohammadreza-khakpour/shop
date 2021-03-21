@@ -14,7 +14,8 @@ namespace Shop.Persistence.EF.SalesItems
             builder.HasKey(_=>_.Id);
             builder.Property(_=>_.ProductCount).IsRequired();
             builder.HasOne(_ => _.Product);
-            builder.HasOne(_ => _.SalesChecklist).WithMany(_ => _.Items).HasForeignKey(_ => _.SalesChecklistId)
+            builder.HasOne(_ => _.SalesChecklist).WithMany(_ => _.Items)
+                .HasForeignKey(_ => _.SalesChecklistId)
                 .OnDelete(DeleteBehavior.NoAction);
         }
     }

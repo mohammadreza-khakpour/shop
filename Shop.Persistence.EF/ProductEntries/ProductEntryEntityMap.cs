@@ -14,8 +14,8 @@ namespace Shop.Persistence.EF.ProductEntries
             builder.HasKey(_ => _.Id);
             builder.Property(_ => _.ProductCount).IsRequired();
             builder.Property(_ => _.EntryDate);
-            builder.HasOne(_ => _.Product);
             builder.Property(_ => _.EntrySerialNumber).HasMaxLength(20);
+            builder.HasOne(_ => _.Product);
         }
     }
 }
