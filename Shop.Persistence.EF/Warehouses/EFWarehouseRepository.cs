@@ -1,4 +1,5 @@
 ﻿using Shop.Entities;
+using Shop.Services.Warehouses.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +18,10 @@ namespace Shop.Persistence.EF.Warehouses
         {
             return _dbContext.Warehouses.Add(warehouse).Entity.Id;
         }
-        public void Delete(Warehouse warehouse)
+        public void Delete(int id)
         {
-            _dbContext.Warehouses.Remove(warehouse);
+            Warehouse theWarehouse = Find(id);
+            _dbContext.Warehouses.Remove(theWarehouse);
         }
         public List<GetWarehouseDto> GetAll()
         {
@@ -39,6 +41,11 @@ namespace Shop.Persistence.EF.Warehouses
                 ProductCount = result.ProductCount,
                 ProductId = result.ProductId,
             };
+        }
+
+        public Warehouse Find(int id)
+        {
+            return _dbContext.Warehouses.Find(id);
         }
     }
 }
