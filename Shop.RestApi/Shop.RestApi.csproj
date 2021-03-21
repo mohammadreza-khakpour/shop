@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <StartupObject></StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Shop.Persistence.EF\Shop.Persistence.EF.csproj" />
+    <ProjectReference Include="..\Shop.Services\Shop.Services.csproj" />
+  </ItemGroup>
+
+
+</Project>
