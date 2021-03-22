@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <Folder Include="AccountingDocuments\Exceptions\" />
-    <Folder Include="ProductCategories\Exceptions\" />
     <Folder Include="ProductEntries\Exceptions\" />
     <Folder Include="Products\Exceptions\" />
     <Folder Include="SalesCheckLists\Exceptions\" />

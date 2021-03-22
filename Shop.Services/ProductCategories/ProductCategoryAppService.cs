@@ -18,8 +18,13 @@ namespace Shop.Services.ProductCategories
             _productCategoryRepository = productCategoryRepository;
             _unitOfWork = unitOfWork;
         }
+        private void CheckForDuplicatedTitle(string title)
+        {
+            _productCategoryRepository.CheckForDuplicatedTitle(title);
+        }
         public int Add(AddProductCategoryDto dto)
         {
+            CheckForDuplicatedTitle(dto.Title);
             var record = _productCategoryRepository.Add(dto);
             _unitOfWork.Complete();
             return record.Id;
