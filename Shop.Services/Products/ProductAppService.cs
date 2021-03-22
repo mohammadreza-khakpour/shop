@@ -16,8 +16,13 @@ namespace Shop.Services.Products
             _productRepository = productRepository;
             _unitOfWork = unitOfWork;
         }
+        private void CheckForDuplicatedTitle(string title)
+        {
+            _productRepository.CheckForDuplicatedTitle(title);
+        }
         public int Add(AddProductDto dto)
         {
+            CheckForDuplicatedTitle(dto.Title);
             var record = _productRepository.Add(dto);
             _unitOfWork.Complete();
             return record.Id;
@@ -32,6 +37,7 @@ namespace Shop.Services.Products
         }
         public void Update(int id, UpdateProductDto dto)
         {
+            CheckForDuplicatedTitle(dto.Title);
             var res = _productRepository.Find(id);
             res.Code = dto.Code;
             res.MinimumAmount = dto.MinimumAmount;

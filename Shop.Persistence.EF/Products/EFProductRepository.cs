@@ -1,6 +1,7 @@
 ﻿using Shop.Entities;
 using Shop.Services.Products;
 using Shop.Services.Products.Contracts;
+using Shop.Services.Products.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +16,18 @@ namespace Shop.Persistence.EF.Products
         {
             _dBContext = dBContext;
         }
-
+        public void CheckForDuplicatedTitle(string title)
+        {
+            bool result = _dBContext.Products
+                .Any(product => product.Title == title);
+            if (result == true)
+            {
+                throw new ProductDuplicatedTitleException();
+            }
+        }
         public Product Add(AddProductDto dto)
         {
+            CheckForDuplicatedTitle(dto.Title);
             Product product = new Product
             {
                 Code = dto.Code,

@@ -5,6 +5,7 @@ namespace Shop.Services.Products.Contracts
 {
     public interface ProductRepository
     {
+        void CheckForDuplicatedTitle(string title);
         Product Add(AddProductDto dto);
         void Delete(int id);
         Product Find(int id);
