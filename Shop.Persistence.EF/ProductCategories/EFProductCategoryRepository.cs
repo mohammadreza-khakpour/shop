@@ -1,4 +1,5 @@
 ﻿using Shop.Entities;
+using Shop.Services.ProductCategories;
 using Shop.Services.ProductCategories.Contracts;
 using System;
 using System.Collections.Generic;
@@ -15,10 +16,13 @@ namespace Shop.Persistence.EF.ProductCategories
             _dBContext = dBContext;
         }
 
-        public int Add(ProductCategory category)
+        public ProductCategory Add(AddProductCategoryDto dto)
         {
-            var result = _dBContext.ProductCategories.Add(category);
-            return result.Entity.Id;
+            var res = _dBContext.ProductCategories.Add(new ProductCategory
+            {
+                Title = dto.Title
+            });
+            return res.Entity;
         }
         public List<GetProductCategoryDto> GetAll()
         {

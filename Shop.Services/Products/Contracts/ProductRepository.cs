@@ -5,7 +5,7 @@ namespace Shop.Services.Products.Contracts
 {
     public interface ProductRepository
     {
-        int Add(Product product);
+        Product Add(AddProductDto dto);
         void Delete(int id);
         Product Find(int id);
         GetProductDto FindOneById(int id);

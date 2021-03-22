@@ -1,4 +1,5 @@
 ﻿using Shop.Entities;
+using Shop.Services.Products;
 using Shop.Services.Products.Contracts;
 using System;
 using System.Collections.Generic;
@@ -15,10 +16,17 @@ namespace Shop.Persistence.EF.Products
             _dBContext = dBContext;
         }
 
-        public int Add(Product product)
+        public Product Add(AddProductDto dto)
         {
-            var result = _dBContext.Products.Add(product);
-            return result.Entity.Id;
+            Product product = new Product
+            {
+                Code = dto.Code,
+                MinimumAmount = dto.MinimumAmount,
+                ProductCategoryId = dto.ProductCategoryId,
+                Title = dto.Title,
+            };
+            var res = _dBContext.Products.Add(product);
+            return res.Entity;
         }
 
         public void Delete(int id)

@@ -20,13 +20,9 @@ namespace Shop.Services.ProductCategories
         }
         public int Add(AddProductCategoryDto dto)
         {
-            ProductCategory productCategory = new ProductCategory()
-            {
-                Title = dto.Title
-            };
-            var recordId = _productCategoryRepository.Add(productCategory);
+            var record = _productCategoryRepository.Add(dto);
             _unitOfWork.Complete();
-            return recordId;
+            return record.Id;
         }
         public List<GetProductCategoryDto> GetAll()
         {

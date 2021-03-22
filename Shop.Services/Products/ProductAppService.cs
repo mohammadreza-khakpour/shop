@@ -18,16 +18,17 @@ namespace Shop.Services.Products
         }
         public int Add(AddProductDto dto)
         {
-            Product product = new Product
-            {
-                Code = dto.Code,
-                MinimumAmount = dto.MinimumAmount,
-                ProductCategoryId = dto.ProductCategoryId,
-                Title = dto.Title,
-            };
-            var recordId = _productRepository.Add(product);
+            var record = _productRepository.Add(dto);
             _unitOfWork.Complete();
-            return recordId;
+            return record.Id;
+        }
+        public List<GetProductDto> GetAll()
+        {
+            return _productRepository.GetAll();
+        }
+        public GetProductDto FindOneById(int id)
+        {
+            return _productRepository.FindOneById(id);
         }
         public void Update(int id, UpdateProductDto dto)
         {
@@ -42,14 +43,6 @@ namespace Shop.Services.Products
         public void Delete(int id)
         {
             _productRepository.Delete(id);
-        }
-        public List<GetProductDto> GetAll()
-        {
-            return _productRepository.GetAll();
-        }
-        public GetProductDto FindOneById(int id)
-        {
-            return _productRepository.FindOneById(id);
         }
     }
 }
