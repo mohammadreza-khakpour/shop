@@ -37,7 +37,6 @@ namespace Shop.Services.Products
         }
         public void Update(int id, UpdateProductDto dto)
         {
-            CheckForDuplicatedTitle(dto.Title);
             var res = _productRepository.Find(id);
             res.Code = dto.Code;
             res.MinimumAmount = dto.MinimumAmount;
@@ -49,6 +48,7 @@ namespace Shop.Services.Products
         public void Delete(int id)
         {
             _productRepository.Delete(id);
+            _unitOfWork.Complete();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Shop.Entities;
 using Shop.Infrastructure;
 using Shop.Services.ProductEntries.Contracts;
+using Shop.Services.Warehouses.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,26 +11,23 @@ namespace Shop.Services.ProductEntries
     public class ProductEntryAppService : ProductEntryService
     {
         private ProductEntryRepository _productEntryRepository;
+        private WarehouseRepository _warehouseRepository;
         private UnitOfWork _unitOfWork;
         public ProductEntryAppService
             (ProductEntryRepository productEntryRepository,
+            WarehouseRepository warehouseRepository,
             UnitOfWork unitOfWork)
         {
+            _warehouseRepository = warehouseRepository;
             _productEntryRepository = productEntryRepository;
             _unitOfWork = unitOfWork;
         }
         public int Add(AddProductEntryDto dto)
         {
-            ProductEntry productEntry = new ProductEntry()
-            {
-                EntryDate = dto.EntryDate,
-                EntrySerialNumber = dto.EntrySerialNumber,
-                ProductCount = dto.ProductCount,
-                ProductId = dto.ProductId
-            };
-            var recordId = _productEntryRepository.Add(productEntry);
+            var record = _productEntryRepository.Add(dto);
+            _warehouseRepository.Add(record.ProductCount,record.ProductId);
             _unitOfWork.Complete();
-            return recordId;
+            return record.Id;
         }
         public void Update(int id, UpdateProductEntryDto dto)
         {

@@ -18,11 +18,11 @@ namespace Shop.RestApi.Controllers
         {
             _service = service;
         }
-        [HttpPost]
-        public int Add([Required][FromBody] AddWarehouseDto dto)
-        {
-            return _service.Add(dto);
-        }
+        //[HttpPost]
+        //public int Add([Required][FromBody] AddWarehouseDto dto)
+        //{
+        //    return _service.Add(dto);
+        //}
         [HttpGet]
         public List<GetWarehouseDto> GetAll()
         {

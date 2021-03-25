@@ -1,7 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Shop.Entities;
+using Shop.Persistence.EF.Warehouses;
+using Shop.Services.ProductEntries;
 using Shop.Services.ProductEntries.Contracts;
+using Shop.Services.Warehouses.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +20,19 @@ namespace Shop.Persistence.EF.ProductEntries
             _dBContext = dBContext;
         }
 
-        public int Add(ProductEntry productEntry)
+        public ProductEntry Add(AddProductEntryDto dto)
         {
+            ProductEntry productEntry = new ProductEntry()
+            {
+                EntryDate = DateTime.Parse(dto.EntryDate),
+                EntrySerialNumber = dto.EntrySerialNumber,
+                ProductCount = dto.ProductCount,
+                ProductId = dto.ProductId
+            };
             var result = _dBContext.ProductEntries.Add(productEntry);
-            return result.Entity.Id;
+            return result.Entity;
         }
+        
 
         public void Delete(int id)
         {

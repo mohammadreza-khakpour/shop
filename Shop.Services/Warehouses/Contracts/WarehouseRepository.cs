@@ -5,8 +5,9 @@ namespace Shop.Services.Warehouses.Contracts
 {
     public interface WarehouseRepository
     {
-        int Add(Warehouse warehouse);
+        int Add(int productCount, int productId);
         void Delete(int id);
+        void CheckIfProductAmountIsSufficient(int productId);
         Warehouse Find(int id);
         GetWarehouseDto FindOneById(int id);
         List<GetWarehouseDto> GetAll();

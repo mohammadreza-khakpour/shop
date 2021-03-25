@@ -14,9 +14,15 @@ namespace Shop.Persistence.EF.Warehouses
         {
             _dbContext = dbContext;
         }
-        public int Add(Warehouse warehouse)
+        public int Add(int productCount, int productId)
         {
-            return _dbContext.Warehouses.Add(warehouse).Entity.Id;
+            Warehouse wr = new Warehouse
+            {
+                ProductCount = productCount,
+                ProductId = productId
+            };
+            var result = _dbContext.Warehouses.Add(wr);
+            return result.Entity.Id;
         }
         public void Delete(int id)
         {
@@ -46,6 +52,25 @@ namespace Shop.Persistence.EF.Warehouses
         public Warehouse Find(int id)
         {
             return _dbContext.Warehouses.Find(id);
+        }
+
+        public void CheckIfProductAmountIsSufficient(int productId)
+        {
+            Product pro = _dbContext.Products.Find(productId);
+            List<Warehouse> Warehouses = _dbContext.Warehouses.Where(x => x.ProductId==productId).ToList();
+            int sum = 0;
+
+            Warehouses.ForEach(x=> 
+            {
+                sum += x.ProductCount;
+            });
+            if (pro.MinimumAmount < sum)
+            {
+                pro.IsSufficientInStore = false;
+            }
+            else {
+                pro.IsSufficientInStore = true;
+            }
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Shop.Migration.Migrations
                 .WithColumn("Title").AsString(50).NotNullable().Unique()
                 .WithColumn("Code").AsString(10).NotNullable().Unique()
                 .WithColumn("MinimumAmount").AsInt32()
-                .WithColumn("IsSufficientInStore").AsBoolean().NotNullable().WithDefaultValue(true)
+                .WithColumn("IsSufficientInStore").AsBoolean().NotNullable().WithDefaultValue(false)
                 .WithColumn("ProductCategoryId").AsInt32()
                 .ForeignKey("Fk_Products_ProductCategories", "ProductCategories", "Id")
                 .OnDelete(System.Data.Rule.None);
