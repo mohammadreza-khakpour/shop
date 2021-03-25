@@ -72,5 +72,30 @@ namespace Shop.Persistence.EF.Warehouses
                 pro.IsSufficientInStore = true;
             }
         }
+
+        private Warehouse FindWarehouseWithProperAmount(int AtleastAmount,int productId)
+        {
+            return _dbContext.Warehouses.First(
+                x => x.ProductId==productId && x.ProductCount >= Math.Abs(AtleastAmount));
+        }
+
+        private Warehouse FindTheFirstWarehouse(int productId)
+        {
+            return _dbContext.Warehouses.First(x => x.ProductId == productId);
+        }
+
+        public void ManageWarehousesAgain(int countDiffer,int productId)
+        {
+            if (countDiffer < 0)
+            {
+                Warehouse warehouse = FindWarehouseWithProperAmount(countDiffer,productId);
+                warehouse.ProductCount += countDiffer;
+            }
+            if (countDiffer > 0)
+            {
+                Warehouse warehouse = FindTheFirstWarehouse(productId);
+                warehouse.ProductCount += countDiffer;
+            }
+        }
     }
 }

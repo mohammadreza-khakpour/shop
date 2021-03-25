@@ -32,10 +32,13 @@ namespace Shop.Services.ProductEntries
         public void Update(int id, UpdateProductEntryDto dto)
         {
             var foundedItem = _productEntryRepository.FindOneById(id);
-            foundedItem.EntryDate = dto.EntryDate;
+
+            foundedItem.EntryDate = DateTime.Parse(dto.EntryDate);
             foundedItem.EntrySerialNumber = dto.EntrySerialNumber;
+            int countDiffer = dto.ProductCount - foundedItem.ProductCount;
             foundedItem.ProductCount = dto.ProductCount;
-            foundedItem.ProductId = dto.ProductId;
+            _warehouseRepository.ManageWarehousesAgain(countDiffer,foundedItem.ProductId);
+
             _unitOfWork.Complete();
         }
         public void Delete(int id)

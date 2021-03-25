@@ -33,11 +33,11 @@ namespace Shop.RestApi.Controllers
         {
             return _service.FindOneById(id);
         }
-        [HttpPut("{id}")]
-        public void Update(int id, [FromBody] UpdateWarehouseDto dto)
-        {
-            _service.Update(id, dto);
-        }
+        //[HttpPut("{id}")]
+        //public void Update(int id, [FromBody] UpdateWarehouseDto dto)
+        //{
+        //    _service.Update(id, dto);
+        //}
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

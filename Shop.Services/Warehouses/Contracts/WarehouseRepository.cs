@@ -11,5 +11,7 @@ namespace Shop.Services.Warehouses.Contracts
         Warehouse Find(int id);
         GetWarehouseDto FindOneById(int id);
         List<GetWarehouseDto> GetAll();
+        void ManageWarehousesAgain(int countDiffer,int productId);
+        
     }
 }

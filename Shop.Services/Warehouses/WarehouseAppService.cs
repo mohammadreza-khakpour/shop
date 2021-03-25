@@ -27,13 +27,15 @@ namespace Shop.Services.Warehouses
         //    _unitOfWork.Complete();
         //    return recordId;
         //}
-        public void Update(int id, UpdateWarehouseDto dto)
-        {
-            var res = _warehouseRepository.Find(id);
-            res.ProductCount = dto.ProductCount;
-            res.ProductId = dto.ProductId;
-            _unitOfWork.Complete();
-        }
+        
+        //public void Update(int id, UpdateWarehouseDto dto)
+        //{
+        //    var res = _warehouseRepository.Find(id);
+        //    res.ProductCount = dto.ProductCount;
+        //    res.ProductId = dto.ProductId;
+        //    _unitOfWork.Complete();
+        //}
+
         public void Delete(int id)
         {
             _warehouseRepository.Delete(id);

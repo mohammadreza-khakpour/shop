@@ -9,6 +9,6 @@ namespace Shop.Services.Warehouses
         void Delete(int id);
         GetWarehouseDto FindOneById(int id);
         List<GetWarehouseDto> GetAll();
-        void Update(int id, UpdateWarehouseDto dto);
+        //void Update(int id, UpdateWarehouseDto dto);
     }
 }
