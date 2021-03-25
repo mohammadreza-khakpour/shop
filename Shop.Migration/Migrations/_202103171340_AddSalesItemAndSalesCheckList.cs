@@ -31,7 +31,7 @@ namespace Shop.Migration.Migrations
                 .OnDelete(System.Data.Rule.None)
                 .WithColumn("SalesChecklistId").AsInt32()
                 .ForeignKey("FK_SalesItems_SalesCheckLists", "SalesCheckLists", "Id")
-                .OnDelete(System.Data.Rule.None);
+                .OnDelete(System.Data.Rule.Cascade);
 
 
         }

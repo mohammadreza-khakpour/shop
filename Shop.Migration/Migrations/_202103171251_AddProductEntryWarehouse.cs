@@ -32,7 +32,7 @@ namespace Shop.Migration.Migrations
                 .WithColumn("ProductCount").AsInt32()
                 .WithColumn("ProductId").AsInt32()
                 .ForeignKey("FK_Warehouses_Products", "Products", "Id")
-                .OnDelete(System.Data.Rule.None);
+                .OnDelete(System.Data.Rule.Cascade);
         }
     }
 }

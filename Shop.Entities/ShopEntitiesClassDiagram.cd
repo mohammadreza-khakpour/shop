@@ -1,16 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Shop.Entities.Product">
-    <Position X="10.25" Y="5.75" Width="2.75" />
-    <NestedTypes>
-      <Enum Name="Shop.Entities.Product.Status" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Product.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-    </NestedTypes>
+    <Position X="10.25" Y="5.25" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AAACAAEAAAAAAEAAAAAgAAAAAAAAAAAAAAACAAAQEAA=</HashCode>
+      <HashCode>AAACAAEAAAAAAEAAAAAgAAAAAAAAAAAAAAACAgAQEAA=</HashCode>
       <FileName>Product.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -18,7 +11,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Shop.Entities.Warehouse">
-    <Position X="15" Y="6.5" Width="1.5" />
+    <Position X="13.75" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EAACAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Warehouse.cs</FileName>
@@ -28,14 +21,14 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Shop.Entities.SalesCheckList">
-    <Position X="5.75" Y="3.5" Width="1.5" />
+    <Position X="6" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAQAAAAAACAAAAAAAAAAAAAEAAAACAAAAAAAAAAA=</HashCode>
       <FileName>SalesCheckList.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Shop.Entities.SalesItem">
-    <Position X="8.5" Y="3.25" Width="1.5" />
+    <Position X="8.25" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EAACAAAAAACAAAAIAAAAAAAAAAAAAAAAAAAAAAAAIAA=</HashCode>
       <FileName>SalesItem.cs</FileName>
@@ -46,7 +39,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Shop.Entities.AccountingDocument">
-    <Position X="6" Y="1.25" Width="2" />
+    <Position X="6.25" Y="2" Width="2" />
     <TypeIdentifier>
       <HashCode>QAACAgAAAAAAAAAAAAAAAAAAAAEACAAAAAAAAAAAAAA=</HashCode>
       <FileName>AccountingDocument.cs</FileName>
@@ -56,19 +49,22 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="Shop.Entities.ProductCategory">
-    <Position X="10.75" Y="2" Width="1.5" />
+    <Position X="10.75" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
       <FileName>ProductCategory.cs</FileName>
     </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Products" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="Shop.Entities.ProductEntry">
-    <Position X="15" Y="3.75" Width="1.5" />
+    <Position X="13.5" Y="3.25" Width="1.5" />
     <AssociationLine Name="Product" Type="Shop.Entities.Product" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="15" Y="4.686" />
-        <Point X="12.188" Y="4.686" />
-        <Point X="12.188" Y="5.75" />
+        <Point X="13.5" Y="4.186" />
+        <Point X="12.188" Y="4.186" />
+        <Point X="12.188" Y="5.25" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>

@@ -17,7 +17,7 @@ namespace Shop.Persistence.EF.Products
             builder.Property(_ => _.MinimumAmount);
             builder.Property(_ => _.IsSufficientInStore).IsRequired().HasDefaultValue(true);
             builder.HasOne(_ => _.ProductCategory).WithMany(_ => _.Products)
-                .HasForeignKey(_ => _.ProductCategoryId).OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(_ => _.ProductCategoryId).OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
