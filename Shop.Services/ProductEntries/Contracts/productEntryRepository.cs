@@ -9,5 +9,6 @@ namespace Shop.Services.ProductEntries.Contracts
         void Delete(int id);
         GetProductEntryDto FindOneById(int id);
         List<GetProductEntryDto> GetAll();
+        ProductEntry Find(int id);
     }
 }

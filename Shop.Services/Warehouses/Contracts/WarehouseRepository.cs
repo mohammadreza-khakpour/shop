@@ -10,8 +10,8 @@ namespace Shop.Services.Warehouses.Contracts
         void CheckIfProductAmountIsSufficient(int productId);
         Warehouse Find(int id);
         GetWarehouseDto FindOneById(int id);
-        List<GetWarehouseDto> GetAll();
+        List<RecordsWithSameProductIdInProducts> GetAll();
         void ManageWarehousesAgain(int countDiffer,int productId);
-        
+        void MinusDeletedAmount(int ProductId, int ProductCount);
     }
 }

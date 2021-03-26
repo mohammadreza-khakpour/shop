@@ -16,31 +16,13 @@ namespace Shop.Services.Warehouses
             _warehouseRepository = warehouseRepository;
             _unitOfWork = unitOfWork;
         }
-        //public int Add(int count, int productid)
-        //{
-        //    Warehouse warehouse = new Warehouse
-        //    {
-        //        ProductCount = count,
-        //        ProductId = productid,
-        //    };
-        //    var recordId = _warehouseRepository.Add(warehouse);
-        //    _unitOfWork.Complete();
-        //    return recordId;
-        //}
-        
-        //public void Update(int id, UpdateWarehouseDto dto)
-        //{
-        //    var res = _warehouseRepository.Find(id);
-        //    res.ProductCount = dto.ProductCount;
-        //    res.ProductId = dto.ProductId;
-        //    _unitOfWork.Complete();
-        //}
 
         public void Delete(int id)
         {
             _warehouseRepository.Delete(id);
+            _unitOfWork.Complete();
         }
-        public List<GetWarehouseDto> GetAll()
+        public List<RecordsWithSameProductIdInProducts> GetAll()
         {
             return _warehouseRepository.GetAll();
         }

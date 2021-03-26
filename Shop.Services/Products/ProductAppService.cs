@@ -20,6 +20,11 @@ namespace Shop.Services.Products
         {
             _productRepository.CheckForDuplicatedTitle(title);
         }
+        public void UpdateSufficiencyStatus(int productId)
+        {
+            _productRepository.UpdateSufficiencyStatus(productId);
+            _unitOfWork.Complete();
+        }
         public int Add(AddProductDto dto)
         {
             CheckForDuplicatedTitle(dto.Title);

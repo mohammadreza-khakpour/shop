@@ -74,5 +74,25 @@ namespace Shop.Persistence.EF.Products
                 IsSufficientInStore = result.IsSufficientInStore
             };
         }
+
+        public void UpdateSufficiencyStatus(int productId)
+        {
+            List<Warehouse> productWarehouses = 
+                _dBContext.Warehouses.Where(x => x.ProductId == productId).ToList();
+            int productOverallCount = 0;
+            productWarehouses.ForEach(x => 
+            {
+                productOverallCount += x.ProductCount;
+            });
+            Product pro = _dBContext.Products.Find(productId);
+            if (pro.MinimumAmount <= productOverallCount)
+            {
+                pro.IsSufficientInStore = false;
+            }
+            else
+            {
+                pro.IsSufficientInStore = true;
+            }
+        }
     }
 }

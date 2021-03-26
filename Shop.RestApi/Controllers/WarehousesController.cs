@@ -18,26 +18,19 @@ namespace Shop.RestApi.Controllers
         {
             _service = service;
         }
-        //[HttpPost]
-        //public int Add([Required][FromBody] AddWarehouseDto dto)
-        //{
-        //    return _service.Add(dto);
-        //}
+        
         [HttpGet]
-        public List<GetWarehouseDto> GetAll()
+        public List<RecordsWithSameProductIdInProducts> GetAll()
         {
             return _service.GetAll();
         }
+
         [HttpGet("{id}")]
         public GetWarehouseDto FindOneById(int id)
         {
             return _service.FindOneById(id);
         }
-        //[HttpPut("{id}")]
-        //public void Update(int id, [FromBody] UpdateWarehouseDto dto)
-        //{
-        //    _service.Update(id, dto);
-        //}
+
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

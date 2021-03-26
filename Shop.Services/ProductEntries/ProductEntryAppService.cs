@@ -31,7 +31,7 @@ namespace Shop.Services.ProductEntries
         }
         public void Update(int id, UpdateProductEntryDto dto)
         {
-            var foundedItem = _productEntryRepository.FindOneById(id);
+            var foundedItem = _productEntryRepository.Find(id);
 
             foundedItem.EntryDate = DateTime.Parse(dto.EntryDate);
             foundedItem.EntrySerialNumber = dto.EntrySerialNumber;
@@ -43,7 +43,9 @@ namespace Shop.Services.ProductEntries
         }
         public void Delete(int id)
         {
+            ProductEntry theProductEntry = _productEntryRepository.Find(id);
             _productEntryRepository.Delete(id);
+            _warehouseRepository.MinusDeletedAmount(theProductEntry.ProductId, theProductEntry.ProductCount);
             _unitOfWork.Complete();
         }
         public List<GetProductEntryDto> GetAll()

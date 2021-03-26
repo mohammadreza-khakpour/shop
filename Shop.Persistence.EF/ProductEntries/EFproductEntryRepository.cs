@@ -32,14 +32,13 @@ namespace Shop.Persistence.EF.ProductEntries
             var result = _dBContext.ProductEntries.Add(productEntry);
             return result.Entity;
         }
-        
 
         public void Delete(int id)
         {
             var res = Find(id);
             _dBContext.ProductEntries.Remove(res);
         }
-        private ProductEntry Find(int id)
+        public ProductEntry Find(int id)
         {
             return _dBContext.ProductEntries.Find(id);
         }

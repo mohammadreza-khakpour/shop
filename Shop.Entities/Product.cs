@@ -12,7 +12,7 @@ namespace Shop.Entities
         public int MinimumAmount { get; set; }
         public int ProductCategoryId { get; set; }
         public ProductCategory ProductCategory { get; set; }
-        public HashSet<Warehouse> Warehouses { get; set; }
-        public bool IsSufficientInStore { get; set; } = true;
+        //public HashSet<Warehouse> Warehouses { get; set; }
+        public bool IsSufficientInStore { get; set; }
     }
 }

@@ -29,15 +29,40 @@ namespace Shop.Persistence.EF.Warehouses
             Warehouse theWarehouse = Find(id);
             _dbContext.Warehouses.Remove(theWarehouse);
         }
-        public List<GetWarehouseDto> GetAll()
+        public List<RecordsWithSameProductIdInProducts> GetAll()
         {
-            return _dbContext.Warehouses.Select(_ => new GetWarehouseDto
-            {
-                Id = _.Id,
-                ProductCount = _.ProductCount,
-                ProductId = _.ProductId,
-            }).ToList();
+            return GetRecordsWithSameProductIdInProducts();
         }
+
+        public List<RecordsWithSameProductIdInProducts> GetRecordsWithSameProductIdInProducts()
+        {
+            var groupedByProductId = _dbContext.Warehouses.GroupBy(x => x.ProductId)
+                   .Select(y => new 
+                   { groupKey = y.Key, sumOfGroupElementsCount = y.Sum(z=>z.ProductCount) }).ToList();
+
+            var innerJoinQuery =
+            from product in _dbContext.Products
+            join warehouse in _dbContext.Warehouses on product.Id equals warehouse.ProductId
+            select new RecordsWithSameProductIdInProducts
+            {
+                product_id = product.Id,
+                product_code = product.Code,
+                product_title = product.Title,
+                product_category_Id = product.ProductCategoryId,
+                //productCount_Overall = groupedByProductId.Find(c=>c.groupKey==product.Id).sumOfGroupElementsCount,
+                productCount_Overall = 0,
+                product_minimumAmount = product.MinimumAmount,
+                product_isEnough = product.IsSufficientInStore
+            };
+            var res = innerJoinQuery.ToList();
+            res.ForEach(j => 
+            {
+                j.productCount_Overall =
+                groupedByProductId.Find(c => c.groupKey == j.product_id).sumOfGroupElementsCount;
+            });
+            return res;
+        }
+
         public GetWarehouseDto FindOneById(int id)
         {
             var result = _dbContext.Warehouses.Find(id);
@@ -54,6 +79,7 @@ namespace Shop.Persistence.EF.Warehouses
             return _dbContext.Warehouses.Find(id);
         }
 
+        // should be checked when selling, not here
         public void CheckIfProductAmountIsSufficient(int productId)
         {
             Product pro = _dbContext.Products.Find(productId);
@@ -75,8 +101,9 @@ namespace Shop.Persistence.EF.Warehouses
 
         private Warehouse FindWarehouseWithProperAmount(int AtleastAmount,int productId)
         {
-            return _dbContext.Warehouses.First(
+            var result = _dbContext.Warehouses.First(
                 x => x.ProductId==productId && x.ProductCount >= Math.Abs(AtleastAmount));
+            return result;
         }
 
         private Warehouse FindTheFirstWarehouse(int productId)
@@ -96,6 +123,12 @@ namespace Shop.Persistence.EF.Warehouses
                 Warehouse warehouse = FindTheFirstWarehouse(productId);
                 warehouse.ProductCount += countDiffer;
             }
+        }
+
+        public void MinusDeletedAmount(int ProductId, int ProductCount)
+        {
+           Warehouse warehouse =  FindWarehouseWithProperAmount(ProductCount,ProductId);
+            warehouse.ProductCount -= ProductCount;
         }
     }
 }

@@ -10,5 +10,6 @@ namespace Shop.Services.Products
         GetProductDto FindOneById(int id);
         List<GetProductDto> GetAll();
         void Update(int id, UpdateProductDto dto);
+        void UpdateSufficiencyStatus(int productId);
     }
 }
