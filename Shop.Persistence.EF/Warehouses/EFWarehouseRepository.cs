@@ -36,9 +36,6 @@ namespace Shop.Persistence.EF.Warehouses
 
         public List<RecordsWithSameProductIdInProducts> GetRecordsWithSameProductIdInProducts()
         {
-            var groupedByProductId = _dbContext.Warehouses.GroupBy(x => x.ProductId)
-                   .Select(y => new 
-                   { groupKey = y.Key, sumOfGroupElementsCount = y.Sum(z=>z.ProductCount) }).ToList();
 
             var innerJoinQuery =
             from product in _dbContext.Products
@@ -49,18 +46,33 @@ namespace Shop.Persistence.EF.Warehouses
                 product_code = product.Code,
                 product_title = product.Title,
                 product_category_Id = product.ProductCategoryId,
-                //productCount_Overall = groupedByProductId.Find(c=>c.groupKey==product.Id).sumOfGroupElementsCount,
-                productCount_Overall = 0,
+                productCount_Overall = warehouse.ProductCount,
                 product_minimumAmount = product.MinimumAmount,
                 product_isEnough = product.IsSufficientInStore
             };
-            var res = innerJoinQuery.ToList();
-            res.ForEach(j => 
+
+
+            var res001 = innerJoinQuery.ToList();
+            var res002 = res001.GroupBy(x => x.product_id).Select(y => new RecordsWithSameProductIdInProducts
             {
-                j.productCount_Overall =
-                groupedByProductId.Find(c => c.groupKey == j.product_id).sumOfGroupElementsCount;
-            });
-            return res;
+                product_id = y.Key,
+                product_code = y.First().product_code,
+                product_title = y.First().product_title,
+                product_category_Id = y.First().product_category_Id,
+                productCount_Overall = y.Sum(z=>z.productCount_Overall),
+                product_isEnough = y.First().product_isEnough,
+                product_minimumAmount = y.First().product_minimumAmount
+
+            }).ToList();
+            return res002;
+
+            //var res = innerJoinQuery.ToList();
+            //res.ForEach(j => 
+            //{
+            //    j.productCount_Overall =
+            //    groupedByProductId.Find(c => c.groupKey == j.product_id).sumOfGroupElementsCount;
+            //});
+            //return res;
         }
 
         public GetWarehouseDto FindOneById(int id)
@@ -92,19 +104,33 @@ namespace Shop.Persistence.EF.Warehouses
             });
             if (pro.MinimumAmount < sum)
             {
-                pro.IsSufficientInStore = false;
+                pro.IsSufficientInStore = true;
             }
             else {
-                pro.IsSufficientInStore = true;
+                pro.IsSufficientInStore = false;
             }
         }
 
         private Warehouse FindWarehouseWithProperAmount(int AtleastAmount,int productId)
         {
-            var result = _dbContext.Warehouses.First(
-                x => x.ProductId==productId && x.ProductCount >= Math.Abs(AtleastAmount));
-            return result;
+            try
+            {
+                var result = _dbContext.Warehouses.First(
+                x => x.ProductId == productId && x.ProductCount >= Math.Abs(AtleastAmount));
+                return result;
+            }
+            catch 
+            {
+                Warehouse firstWarehouse = FindTheFirstWarehouse(productId);
+                int productCountOfFirstWarehouse = firstWarehouse.ProductCount;
+                AtleastAmount = AtleastAmount + productCountOfFirstWarehouse;
+                var result = _dbContext.Warehouses.First(
+                x => x.ProductId == productId && x.ProductCount >= Math.Abs(AtleastAmount));
+                return result;
+            }
+            
         }
+
 
         private Warehouse FindTheFirstWarehouse(int productId)
         {

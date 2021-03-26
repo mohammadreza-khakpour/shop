@@ -26,6 +26,7 @@ namespace Shop.Services.ProductEntries
         {
             var record = _productEntryRepository.Add(dto);
             _warehouseRepository.Add(record.ProductCount,record.ProductId);
+            _warehouseRepository.CheckIfProductAmountIsSufficient(record.ProductId);
             _unitOfWork.Complete();
             return record.Id;
         }
@@ -38,7 +39,7 @@ namespace Shop.Services.ProductEntries
             int countDiffer = dto.ProductCount - foundedItem.ProductCount;
             foundedItem.ProductCount = dto.ProductCount;
             _warehouseRepository.ManageWarehousesAgain(countDiffer,foundedItem.ProductId);
-
+            _warehouseRepository.CheckIfProductAmountIsSufficient(foundedItem.ProductId);
             _unitOfWork.Complete();
         }
         public void Delete(int id)
@@ -46,6 +47,7 @@ namespace Shop.Services.ProductEntries
             ProductEntry theProductEntry = _productEntryRepository.Find(id);
             _productEntryRepository.Delete(id);
             _warehouseRepository.MinusDeletedAmount(theProductEntry.ProductId, theProductEntry.ProductCount);
+            _warehouseRepository.CheckIfProductAmountIsSufficient(theProductEntry.ProductId);
             _unitOfWork.Complete();
         }
         public List<GetProductEntryDto> GetAll()
