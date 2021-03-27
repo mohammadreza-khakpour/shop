@@ -103,11 +103,7 @@ namespace Shop.Persistence.EF.Warehouses
             catch
             {
                 Warehouse firstWarehouse = FindTheFirstWarehouse(productId);
-                int productCountOfFirstWarehouse = firstWarehouse.ProductCount;
-                AtleastAmount = AtleastAmount + productCountOfFirstWarehouse;
-                var result = _dbContext.Warehouses.First(
-                _ => _.ProductId == productId && _.ProductCount >= Math.Abs(AtleastAmount));
-                return result;
+                return firstWarehouse;
             }
 
         }
