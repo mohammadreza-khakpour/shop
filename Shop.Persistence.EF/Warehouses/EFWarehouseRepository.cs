@@ -24,23 +24,23 @@ namespace Shop.Persistence.EF.Warehouses
             var result = _dbContext.Warehouses.Add(wr);
             return result.Entity.Id;
         }
-        public void Delete(int id)
+        //public void Delete(int id)
+        //{
+        //    Warehouse theWarehouse = Find(id);
+        //    _dbContext.Warehouses.Remove(theWarehouse);
+        //}
+        public List<GetWarehousesGroupedByProductIdDto> GetAll()
         {
-            Warehouse theWarehouse = Find(id);
-            _dbContext.Warehouses.Remove(theWarehouse);
-        }
-        public List<RecordsWithSameProductIdInProducts> GetAll()
-        {
-            return GetRecordsWithSameProductIdInProducts();
+            return GetWarehousesGroupedByProductId();
         }
 
-        public List<RecordsWithSameProductIdInProducts> GetRecordsWithSameProductIdInProducts()
+        private List<GetWarehousesGroupedByProductIdDto> GetWarehousesGroupedByProductId()
         {
 
             var innerJoinQuery =
             from product in _dbContext.Products
             join warehouse in _dbContext.Warehouses on product.Id equals warehouse.ProductId
-            select new RecordsWithSameProductIdInProducts
+            select new 
             {
                 product_id = product.Id,
                 product_code = product.Code,
@@ -53,7 +53,7 @@ namespace Shop.Persistence.EF.Warehouses
 
 
             var res001 = innerJoinQuery.ToList();
-            var res002 = res001.GroupBy(x => x.product_id).Select(y => new RecordsWithSameProductIdInProducts
+            var res002 = res001.GroupBy(x => x.product_id).Select(y => new GetWarehousesGroupedByProductIdDto
             {
                 product_id = y.Key,
                 product_code = y.First().product_code,
@@ -65,33 +65,24 @@ namespace Shop.Persistence.EF.Warehouses
 
             }).ToList();
             return res002;
-
-            //var res = innerJoinQuery.ToList();
-            //res.ForEach(j => 
-            //{
-            //    j.productCount_Overall =
-            //    groupedByProductId.Find(c => c.groupKey == j.product_id).sumOfGroupElementsCount;
-            //});
-            //return res;
         }
 
-        public GetWarehouseDto FindOneById(int id)
-        {
-            var result = _dbContext.Warehouses.Find(id);
-            return new GetWarehouseDto
-            {
-                Id = result.Id,
-                ProductCount = result.ProductCount,
-                ProductId = result.ProductId,
-            };
-        }
+        //public GetWarehouseDto FindOneById(int id)
+        //{
+        //    var result = _dbContext.Warehouses.Find(id);
+        //    return new GetWarehouseDto
+        //    {
+        //        Id = result.Id,
+        //        ProductCount = result.ProductCount,
+        //        ProductId = result.ProductId,
+        //    };
+        //}
 
         public Warehouse Find(int id)
         {
             return _dbContext.Warehouses.Find(id);
         }
 
-        // should be checked when selling, not here
         public void CheckIfProductAmountIsSufficient(int productId)
         {
             Product pro = _dbContext.Products.Find(productId);
@@ -102,7 +93,7 @@ namespace Shop.Persistence.EF.Warehouses
             {
                 sum += x.ProductCount;
             });
-            if (pro.MinimumAmount < sum)
+            if (pro.MinimumAmount <= sum)
             {
                 pro.IsSufficientInStore = true;
             }

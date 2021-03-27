@@ -25,6 +25,15 @@ namespace Shop.Persistence.EF.Products
                 throw new ProductDuplicatedTitleException();
             }
         }
+        public void CheckForDuplicatedCode(string code)
+        {
+            bool result = _dBContext.Products
+                .Any(product => product.Code == code);
+            if (result == true)
+            {
+                throw new ProductDuplicatedCodeException();
+            }
+        }
         public Product Add(AddProductDto dto)
         {
             CheckForDuplicatedTitle(dto.Title);

@@ -1,6 +1,6 @@
 ﻿namespace Shop.Services.Warehouses.Contracts
 {
-    public class RecordsWithSameProductIdInProducts
+    public class GetWarehousesGroupedByProductIdDto
     {
         public int product_category_Id { get; set; }
         public int product_id { get; set; }

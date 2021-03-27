@@ -6,6 +6,7 @@ namespace Shop.Services.ProductEntries.Contracts
     {
         public int Id { get; set; }
         public int ProductCount { get; set; }
+        public string ProductCode { get; set; }
         public DateTime EntryDate { get; set; }
         public string EntrySerialNumber { get; set; }
         public int ProductId { get; set; }

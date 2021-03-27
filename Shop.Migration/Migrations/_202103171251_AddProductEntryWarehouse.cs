@@ -21,6 +21,7 @@ namespace Shop.Migration.Migrations
             Create.Table("ProductEntries")
                 .WithColumn("Id").AsInt32().PrimaryKey().Identity()
                 .WithColumn("ProductCount").AsInt32().NotNullable()
+                .WithColumn("ProductCode").AsString(10).NotNullable()
                 .WithColumn("EntryDate").AsDateTime()
                 .WithColumn("EntrySerialNumber").AsString(20).Unique()
                 .WithColumn("ProductId").AsInt32()

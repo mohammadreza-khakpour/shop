@@ -13,6 +13,7 @@ namespace Shop.Services.ProductEntries
         private ProductEntryRepository _productEntryRepository;
         private WarehouseRepository _warehouseRepository;
         private UnitOfWork _unitOfWork;
+        
         public ProductEntryAppService
             (ProductEntryRepository productEntryRepository,
             WarehouseRepository warehouseRepository,
@@ -22,10 +23,13 @@ namespace Shop.Services.ProductEntries
             _productEntryRepository = productEntryRepository;
             _unitOfWork = unitOfWork;
         }
+
+
         public int Add(AddProductEntryDto dto)
         {
             var record = _productEntryRepository.Add(dto);
             _warehouseRepository.Add(record.ProductCount,record.ProductId);
+            _unitOfWork.Complete();
             _warehouseRepository.CheckIfProductAmountIsSufficient(record.ProductId);
             _unitOfWork.Complete();
             return record.Id;
@@ -35,6 +39,7 @@ namespace Shop.Services.ProductEntries
             var foundedItem = _productEntryRepository.Find(id);
 
             foundedItem.EntryDate = DateTime.Parse(dto.EntryDate);
+            foundedItem.ProductCode = dto.ProductCode;
             foundedItem.EntrySerialNumber = dto.EntrySerialNumber;
             int countDiffer = dto.ProductCount - foundedItem.ProductCount;
             foundedItem.ProductCount = dto.ProductCount;

@@ -20,21 +20,21 @@ namespace Shop.RestApi.Controllers
         }
         
         [HttpGet]
-        public List<RecordsWithSameProductIdInProducts> GetAll()
+        public List<GetWarehousesGroupedByProductIdDto> GetAll()
         {
             return _service.GetAll();
         }
 
-        [HttpGet("{id}")]
-        public GetWarehouseDto FindOneById(int id)
-        {
-            return _service.FindOneById(id);
-        }
+        //[HttpGet("{id}")]
+        //public GetWarehouseDto FindOneById(int id)
+        //{
+        //    return _service.FindOneById(id);
+        //}
 
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-            _service.Delete(id);
-        }
+        //[HttpDelete("{id}")]
+        //public void Delete(int id)
+        //{
+        //    _service.Delete(id);
+        //}
     }
 }

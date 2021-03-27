@@ -16,19 +16,9 @@ namespace Shop.Services.Warehouses
             _warehouseRepository = warehouseRepository;
             _unitOfWork = unitOfWork;
         }
-
-        public void Delete(int id)
-        {
-            _warehouseRepository.Delete(id);
-            _unitOfWork.Complete();
-        }
-        public List<RecordsWithSameProductIdInProducts> GetAll()
+        public List<GetWarehousesGroupedByProductIdDto> GetAll()
         {
             return _warehouseRepository.GetAll();
-        }
-        public GetWarehouseDto FindOneById(int id)
-        {
-            return _warehouseRepository.FindOneById(id);
         }
     }
 }

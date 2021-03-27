@@ -5,8 +5,6 @@ namespace Shop.Services.Warehouses
 {
     public interface WarehouseService
     {
-        void Delete(int id);
-        GetWarehouseDto FindOneById(int id);
-        List<RecordsWithSameProductIdInProducts> GetAll();
+        List<GetWarehousesGroupedByProductIdDto> GetAll();
     }
 }

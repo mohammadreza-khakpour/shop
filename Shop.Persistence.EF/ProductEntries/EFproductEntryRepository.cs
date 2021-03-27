@@ -24,6 +24,7 @@ namespace Shop.Persistence.EF.ProductEntries
         {
             ProductEntry productEntry = new ProductEntry()
             {
+                ProductCode = dto.ProductCode,
                 EntryDate = DateTime.Parse(dto.EntryDate),
                 EntrySerialNumber = dto.EntrySerialNumber,
                 ProductCount = dto.ProductCount,
@@ -50,6 +51,7 @@ namespace Shop.Persistence.EF.ProductEntries
                 EntryDate = _.EntryDate,
                 EntrySerialNumber = _.EntrySerialNumber,
                 ProductCount = _.ProductCount,
+                ProductCode = _.ProductCode,
                 ProductId = _.ProductId
             }).ToList();
         }
@@ -63,6 +65,7 @@ namespace Shop.Persistence.EF.ProductEntries
                 EntryDate = result.EntryDate,
                 EntrySerialNumber = result.EntrySerialNumber,
                 ProductCount = result.ProductCount,
+                ProductCode = result.ProductCode,
                 ProductId = result.ProductId
             };
         }
