@@ -35,13 +35,13 @@ namespace Shop.Persistence.EF.SalesItems
         }
         public GetSalesItemDto FindOneById(int id)
         {
-            var result = _dbContext.SalesItems.Find(id);
+            var theSalesItem = _dbContext.SalesItems.Find(id);
             return new GetSalesItemDto
             {
-                Id = result.Id,
-                ProductCount = result.ProductCount,
-                ProductId = result.ProductId,
-                SalesChecklistId = result.SalesChecklistId
+                Id = theSalesItem.Id,
+                ProductCount = theSalesItem.ProductCount,
+                ProductId = theSalesItem.ProductId,
+                SalesChecklistId = theSalesItem.SalesChecklistId
             };
         }
 

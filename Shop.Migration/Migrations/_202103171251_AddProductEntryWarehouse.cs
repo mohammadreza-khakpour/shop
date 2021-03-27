@@ -6,7 +6,7 @@ using System.Text;
 namespace Shop.Migration.Migrations
 {
     [Migration(202103171251)]
-    public class _202103171251_AddProductEntryWarehouse : FluentMigrator.Migration
+    public class _202103171251_ProductEntriesAndWarehousesAdded : FluentMigrator.Migration
     {
         public override void Down()
         {

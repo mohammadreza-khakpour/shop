@@ -72,15 +72,15 @@ namespace Shop.Persistence.EF.Products
 
         public GetProductDto FindOneById(int id)
         {
-            var result = _dBContext.Products.Find(id);
+            var theProduct = _dBContext.Products.Find(id);
             return new GetProductDto()
             {
-                Id = result.Id,
-                Title = result.Title,
-                Code = result.Code,
-                MinimumAmount = result.MinimumAmount,
-                ProductCategoryId = result.ProductCategoryId,
-                IsSufficientInStore = result.IsSufficientInStore
+                Id = theProduct.Id,
+                Title = theProduct.Title,
+                Code = theProduct.Code,
+                MinimumAmount = theProduct.MinimumAmount,
+                ProductCategoryId = theProduct.ProductCategoryId,
+                IsSufficientInStore = theProduct.IsSufficientInStore
             };
         }
 
@@ -93,14 +93,14 @@ namespace Shop.Persistence.EF.Products
             {
                 productOverallCount += x.ProductCount;
             });
-            Product pro = _dBContext.Products.Find(productId);
-            if (pro.MinimumAmount <= productOverallCount)
+            Product theProduct = _dBContext.Products.Find(productId);
+            if (theProduct.MinimumAmount <= productOverallCount)
             {
-                pro.IsSufficientInStore = false;
+                theProduct.IsSufficientInStore = false;
             }
             else
             {
-                pro.IsSufficientInStore = true;
+                theProduct.IsSufficientInStore = true;
             }
         }
     }

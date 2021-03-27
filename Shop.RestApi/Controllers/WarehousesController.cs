@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Shop.RestApi.Controllers
 {
     [ApiController]
-    [Route("api/warehouse")]
+    [Route("api/warehouses")]
     public class WarehousesController : Controller
     {
         private WarehouseService _service;
@@ -24,17 +24,5 @@ namespace Shop.RestApi.Controllers
         {
             return _service.GetAll();
         }
-
-        //[HttpGet("{id}")]
-        //public GetWarehouseDto FindOneById(int id)
-        //{
-        //    return _service.FindOneById(id);
-        //}
-
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //    _service.Delete(id);
-        //}
     }
 }

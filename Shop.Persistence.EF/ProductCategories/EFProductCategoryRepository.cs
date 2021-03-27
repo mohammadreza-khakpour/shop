@@ -44,8 +44,8 @@ namespace Shop.Persistence.EF.ProductCategories
 
         public GetProductCategoryDto FindOneById(int id)
         {
-            var result = _dBContext.ProductCategories.Find(id);
-            return new GetProductCategoryDto() { Id = result.Id, Title = result.Title };
+            var theProductCategory = _dBContext.ProductCategories.Find(id);
+            return new GetProductCategoryDto() { Id = theProductCategory.Id, Title = theProductCategory.Title };
         }
 
     }

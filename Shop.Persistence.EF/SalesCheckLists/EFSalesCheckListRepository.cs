@@ -35,12 +35,12 @@ namespace Shop.Persistence.EF.SalesCheckLists
         }
         public GetSalesCheckListDto FindOneById(int id)
         {
-            var result = _dBContext.SalesCheckLists.Find(id);
+            var theSalesCheckList = _dBContext.SalesCheckLists.Find(id);
             return new GetSalesCheckListDto
             {
-                Id = result.Id,
-                RecordDate = result.RecordDate,
-                SerialNumber = result.SerialNumber
+                Id = theSalesCheckList.Id,
+                RecordDate = theSalesCheckList.RecordDate,
+                SerialNumber = theSalesCheckList.SerialNumber
             };
         }
         public SalesCheckList Find(int id)

@@ -24,11 +24,7 @@ namespace Shop.Persistence.EF.Warehouses
             var result = _dbContext.Warehouses.Add(wr);
             return result.Entity.Id;
         }
-        //public void Delete(int id)
-        //{
-        //    Warehouse theWarehouse = Find(id);
-        //    _dbContext.Warehouses.Remove(theWarehouse);
-        //}
+
         public List<GetWarehousesGroupedByProductIdDto> GetAll()
         {
             return GetWarehousesGroupedByProductId();
@@ -36,11 +32,28 @@ namespace Shop.Persistence.EF.Warehouses
 
         private List<GetWarehousesGroupedByProductIdDto> GetWarehousesGroupedByProductId()
         {
+            var res001 = DoInnerJoinQueryOnProductId();
+            var res002 = res001.AsEnumerable().GroupBy(_ => _.product_id)
+                .Select(group => new GetWarehousesGroupedByProductIdDto
+                {
+                    product_id = group.Key,
+                    product_code = group.First().product_code,
+                    product_title = group.First().product_title,
+                    product_category_Id = group.First().product_category_Id,
+                    productCount_Overall = group.Sum(_ => _.productCount_Overall),
+                    product_isEnough = group.First().product_isEnough,
+                    product_minimumAmount = group.First().product_minimumAmount
 
+                }).ToList();
+            return res002;
+        }
+
+        private IQueryable<InnerJoinQueryOnProductId> DoInnerJoinQueryOnProductId()
+        {
             var innerJoinQuery =
             from product in _dbContext.Products
             join warehouse in _dbContext.Warehouses on product.Id equals warehouse.ProductId
-            select new 
+            select new InnerJoinQueryOnProductId
             {
                 product_id = product.Id,
                 product_code = product.Code,
@@ -50,33 +63,8 @@ namespace Shop.Persistence.EF.Warehouses
                 product_minimumAmount = product.MinimumAmount,
                 product_isEnough = product.IsSufficientInStore
             };
-
-
-            var res001 = innerJoinQuery.ToList();
-            var res002 = res001.GroupBy(x => x.product_id).Select(y => new GetWarehousesGroupedByProductIdDto
-            {
-                product_id = y.Key,
-                product_code = y.First().product_code,
-                product_title = y.First().product_title,
-                product_category_Id = y.First().product_category_Id,
-                productCount_Overall = y.Sum(z=>z.productCount_Overall),
-                product_isEnough = y.First().product_isEnough,
-                product_minimumAmount = y.First().product_minimumAmount
-
-            }).ToList();
-            return res002;
+            return innerJoinQuery;
         }
-
-        //public GetWarehouseDto FindOneById(int id)
-        //{
-        //    var result = _dbContext.Warehouses.Find(id);
-        //    return new GetWarehouseDto
-        //    {
-        //        Id = result.Id,
-        //        ProductCount = result.ProductCount,
-        //        ProductId = result.ProductId,
-        //    };
-        //}
 
         public Warehouse Find(int id)
         {
@@ -85,54 +73,56 @@ namespace Shop.Persistence.EF.Warehouses
 
         public void CheckIfProductAmountIsSufficient(int productId)
         {
-            Product pro = _dbContext.Products.Find(productId);
-            List<Warehouse> Warehouses = _dbContext.Warehouses.Where(x => x.ProductId==productId).ToList();
+            Product product = _dbContext.Products.Find(productId);
+            List<Warehouse> Warehouses = _dbContext.Warehouses
+                .Where(x => x.ProductId == productId).ToList();
+            
             int sum = 0;
-
-            Warehouses.ForEach(x=> 
+            Warehouses.ForEach(warehouse =>
             {
-                sum += x.ProductCount;
+                sum += warehouse.ProductCount;
             });
-            if (pro.MinimumAmount <= sum)
+            if (product.MinimumAmount <= sum)
             {
-                pro.IsSufficientInStore = true;
+                product.IsSufficientInStore = true;
             }
-            else {
-                pro.IsSufficientInStore = false;
+            else
+            {
+                product.IsSufficientInStore = false;
             }
         }
 
-        private Warehouse FindWarehouseWithProperAmount(int AtleastAmount,int productId)
+        private Warehouse FindWarehouseWithProperAmount(int AtleastAmount, int productId)
         {
             try
             {
                 var result = _dbContext.Warehouses.First(
-                x => x.ProductId == productId && x.ProductCount >= Math.Abs(AtleastAmount));
+                _ => _.ProductId == productId && _.ProductCount >= Math.Abs(AtleastAmount));
                 return result;
             }
-            catch 
+            catch
             {
                 Warehouse firstWarehouse = FindTheFirstWarehouse(productId);
                 int productCountOfFirstWarehouse = firstWarehouse.ProductCount;
                 AtleastAmount = AtleastAmount + productCountOfFirstWarehouse;
                 var result = _dbContext.Warehouses.First(
-                x => x.ProductId == productId && x.ProductCount >= Math.Abs(AtleastAmount));
+                _ => _.ProductId == productId && _.ProductCount >= Math.Abs(AtleastAmount));
                 return result;
             }
-            
+
         }
 
 
         private Warehouse FindTheFirstWarehouse(int productId)
         {
-            return _dbContext.Warehouses.First(x => x.ProductId == productId);
+            return _dbContext.Warehouses.First(_ => _.ProductId == productId);
         }
 
-        public void ManageWarehousesAgain(int countDiffer,int productId)
+        public void ManageWarehousesAgain(int countDiffer, int productId)
         {
             if (countDiffer < 0)
             {
-                Warehouse warehouse = FindWarehouseWithProperAmount(countDiffer,productId);
+                Warehouse warehouse = FindWarehouseWithProperAmount(countDiffer, productId);
                 warehouse.ProductCount += countDiffer;
             }
             if (countDiffer > 0)
@@ -144,7 +134,7 @@ namespace Shop.Persistence.EF.Warehouses
 
         public void MinusDeletedAmount(int ProductId, int ProductCount)
         {
-           Warehouse warehouse =  FindWarehouseWithProperAmount(ProductCount,ProductId);
+            Warehouse warehouse = FindWarehouseWithProperAmount(ProductCount, ProductId);
             warehouse.ProductCount -= ProductCount;
         }
     }

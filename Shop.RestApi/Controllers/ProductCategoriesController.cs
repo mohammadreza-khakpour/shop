@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Shop.RestApi.Controllers
 {
     [ApiController]
-    [Route("api/product-category")]
+    [Route("api/product-categories")]
     public class ProductCategoriesController : Controller
     {
         private ProductCategoryService _service;

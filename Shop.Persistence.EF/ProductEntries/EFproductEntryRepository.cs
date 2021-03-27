@@ -58,15 +58,15 @@ namespace Shop.Persistence.EF.ProductEntries
 
         public GetProductEntryDto FindOneById(int id)
         {
-            var result = _dBContext.ProductEntries.Find(id);
+            var theProductEntry = _dBContext.ProductEntries.Find(id);
             return new GetProductEntryDto()
             {
-                Id = result.Id,
-                EntryDate = result.EntryDate,
-                EntrySerialNumber = result.EntrySerialNumber,
-                ProductCount = result.ProductCount,
-                ProductCode = result.ProductCode,
-                ProductId = result.ProductId
+                Id = theProductEntry.Id,
+                EntryDate = theProductEntry.EntryDate,
+                EntrySerialNumber = theProductEntry.EntrySerialNumber,
+                ProductCount = theProductEntry.ProductCount,
+                ProductCode = theProductEntry.ProductCode,
+                ProductId = theProductEntry.ProductId
             };
         }
 

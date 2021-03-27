@@ -43,13 +43,13 @@ namespace Shop.Persistence.EF.AccountingDocuments
 
         public GetAccountingDocumentDto FindOneById(int id)
         {
-            var result = _dBContext.AccountingDocuments.Find(id);
+            var theAccountingDocument = _dBContext.AccountingDocuments.Find(id);
             return new GetAccountingDocumentDto()
             {
-                Id = result.Id,
-                CreationDate = result.CreationDate,
-                SalesCheckListId = result.SalesCheckListId,
-                SerialNumber = result.SerialNumber
+                Id = theAccountingDocument.Id,
+                CreationDate = theAccountingDocument.CreationDate,
+                SalesCheckListId = theAccountingDocument.SalesCheckListId,
+                SerialNumber = theAccountingDocument.SerialNumber
             };
         }
 
