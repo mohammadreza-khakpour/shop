@@ -1,17 +1,34 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Shop.Entities.Product">
-    <Position X="10.25" Y="5.25" Width="2.75" />
+  <Class Name="Shop.Entities.ProductCategory">
+    <Position X="9.75" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAEAAAAAAEAAAAAgAAAAAAAAAAAAAAACAgAQEAA=</HashCode>
+      <HashCode>AAACAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>ProductCategory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Shop.Entities.Product">
+    <Position X="7.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAEAAAAAAEAAAAAgAAAAAAAAAAAAAAACAgAAEAA=</HashCode>
       <FileName>Product.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="ProductCategory" />
     </ShowAsAssociation>
   </Class>
+  <Class Name="Shop.Entities.ProductEntry">
+    <Position X="11.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAACAAAAAAAAAAAIAAAAAACAAAAAAAAAAAAACAAAIAA=</HashCode>
+      <FileName>ProductEntry.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Product" />
+    </ShowAsAssociation>
+  </Class>
   <Class Name="Shop.Entities.Warehouse">
-    <Position X="13.5" Y="4.75" Width="1.5" />
+    <Position X="9.75" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EAACAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Warehouse.cs</FileName>
@@ -20,15 +37,8 @@
       <Property Name="Product" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="Shop.Entities.SalesCheckList">
-    <Position X="6" Y="4.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACAQAAAAAACAAAAAAAAAAAAAEAAAACAAAAAAAAAAA=</HashCode>
-      <FileName>SalesCheckList.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Shop.Entities.SalesItem">
-    <Position X="8.25" Y="4.25" Width="1.5" />
+    <Position X="4.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EAACAAAAAACAAAAIAAAAAAAAAAAAAAAAAAAAAAAAIAA=</HashCode>
       <FileName>SalesItem.cs</FileName>
@@ -38,38 +48,21 @@
       <Property Name="SalesChecklist" />
     </ShowAsAssociation>
   </Class>
+  <Class Name="Shop.Entities.SalesCheckList">
+    <Position X="1.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAQAAAAAACAAAAAAAAAAAAAEAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>SalesCheckList.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="Shop.Entities.AccountingDocument">
-    <Position X="6.25" Y="2" Width="2" />
+    <Position X="1.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QAACAgAAAAAAAAAAAAAAAAAAAAEACAAAAAAAAAAAAAA=</HashCode>
       <FileName>AccountingDocument.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="SalesCheckList" />
-    </ShowAsAssociation>
-  </Class>
-  <Class Name="Shop.Entities.ProductCategory">
-    <Position X="10" Y="2" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
-      <FileName>ProductCategory.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Shop.Entities.ProductEntry">
-    <Position X="12.5" Y="2.25" Width="1.5" />
-    <AssociationLine Name="Product" Type="Shop.Entities.Product" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="12.5" Y="3.186" />
-        <Point X="12.188" Y="3.186" />
-        <Point X="12.188" Y="5.25" />
-      </Path>
-    </AssociationLine>
-    <TypeIdentifier>
-      <HashCode>EAACAAAAAAAAAAAIAAAAAACAAAAAAAAAAAAACAAAAAA=</HashCode>
-      <FileName>ProductEntry.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Product" />
     </ShowAsAssociation>
   </Class>
   <Font Name="Segoe UI" Size="9" />
