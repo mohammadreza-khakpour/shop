@@ -25,38 +25,48 @@ namespace Shop.Services.SalesCheckLists
         }
         public int Add(AddSalesCheckListDto dto)
         {
-            SalesCheckList salesCheckList = new SalesCheckList
-            {
-                RecordDate = DateTime.Parse(dto.RecordDate),
-                SerialNumber = dto.SerialNumber,
-                CustomerFullName = dto.CustomerFullName,
-            };
+            SalesCheckList salesCheckList = _salesCheckListRepository.Add(dto);
             List<AddSalesItemDto> dtoSalesItems = dto.SalesItems;
             dtoSalesItems.ForEach(dtoSaleItem=> 
             {
-                SalesItem addedSalesItem = _salesItemRepository.Add(dtoSaleItem);
-                salesCheckList.Items.Add(addedSalesItem);
+                SalesItem SalesItem = _salesItemRepository.Add(dtoSaleItem);
+                salesCheckList.Items.Add(SalesItem);
+                salesCheckList.OverAllProductCount += dtoSaleItem.ProductCount;
+                salesCheckList.OverAllProductPrice += dtoSaleItem.ProductPrice * dtoSaleItem.ProductCount;
             });
-            var record = _salesCheckListRepository.Add(salesCheckList);
             _unitOfWork.Complete();
-            return record.Id;
-        }
-        public void Update(int id, UpdateSalesCheckListDto dto)
-        {
-            var res = _salesCheckListRepository.Find(id);
-            res.RecordDate = dto.RecordDate;
-            res.SerialNumber = dto.SerialNumber;
-            _unitOfWork.Complete();
-        }
-        public void Delete(int id)
-        {
-            _salesCheckListRepository.Delete(id);
+            return salesCheckList.Id;
         }
         public List<GetSalesCheckListDto> GetAll()
         {
             return _salesCheckListRepository.GetAll();
         }
-        public GetSalesCheckListDto FindOneById(int id)
+        public void Update(int id, UpdateSalesCheckListDto dto)
+        {
+            _salesItemRepository.DeleteByCheckListId(id);
+            //_unitOfWork.Complete();
+            var salesChecklist = _salesCheckListRepository.FindAndRemoveSalesItems(id);
+            
+            salesChecklist.RecordDate = DateTime.Parse(dto.RecordDate);
+            salesChecklist.SerialNumber = dto.SerialNumber;
+            salesChecklist.CustomerFullName = dto.CustomerFullName;
+            
+            foreach (var saleitem in dto.SalesItems)
+            {
+                SalesItem SalesItem = _salesItemRepository.Add(saleitem);
+                salesChecklist.Items.Add(SalesItem);
+                salesChecklist.OverAllProductCount += SalesItem.ProductCount;
+                salesChecklist.OverAllProductPrice += SalesItem.ProductPrice * SalesItem.ProductCount;
+            }
+            _unitOfWork.Complete();
+        }
+        public void Delete(int id)
+        {
+            _salesCheckListRepository.Delete(id);
+            _unitOfWork.Complete();
+        }
+        
+        public GetOneSalesCheckListDto FindOneById(int id)
         {
             return _salesCheckListRepository.FindOneById(id);
         }

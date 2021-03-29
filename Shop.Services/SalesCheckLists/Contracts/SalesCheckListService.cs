@@ -7,7 +7,7 @@ namespace Shop.Services.SalesCheckLists
     {
         int Add(AddSalesCheckListDto dto);
         void Delete(int id);
-        GetSalesCheckListDto FindOneById(int id);
+        GetOneSalesCheckListDto FindOneById(int id);
         List<GetSalesCheckListDto> GetAll();
         void Update(int id, UpdateSalesCheckListDto dto);
     }

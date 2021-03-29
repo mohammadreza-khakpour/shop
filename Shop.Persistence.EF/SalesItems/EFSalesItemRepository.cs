@@ -17,7 +17,8 @@ namespace Shop.Persistence.EF.SalesItems
         }
         public SalesItem Add(AddSalesItemDto salesItemDto)
         {
-            SalesItem salesItem = new SalesItem() { 
+            SalesItem salesItem = new SalesItem()
+            {
                 ProductCode = salesItemDto.ProductCode,
                 ProductCount = salesItemDto.ProductCount,
                 ProductPrice = salesItemDto.ProductPrice,
@@ -25,10 +26,11 @@ namespace Shop.Persistence.EF.SalesItems
             };
             return salesItem;
         }
-        public void Delete(int id)
+        public void DeleteByCheckListId(int id)
         {
-            var res = Find(id);
-            _dbContext.SalesItems.Remove(res);
+            var res = _dbContext.SalesItems.Where(_ => _.SalesChecklistId == id).ToList();
+            res.RemoveRange(0,res.Count);
+
         }
         public List<GetSalesItemDto> GetAll()
         {
@@ -36,6 +38,8 @@ namespace Shop.Persistence.EF.SalesItems
             {
                 Id = _.Id,
                 ProductCount = _.ProductCount,
+                ProductCode = _.ProductCode,
+                ProductPrice = _.ProductPrice,
                 ProductId = _.ProductId,
                 SalesChecklistId = _.SalesChecklistId
             }).ToList();
@@ -47,12 +51,14 @@ namespace Shop.Persistence.EF.SalesItems
             {
                 Id = theSalesItem.Id,
                 ProductCount = theSalesItem.ProductCount,
+                ProductCode = theSalesItem.ProductCode,
+                ProductPrice = theSalesItem.ProductPrice,
                 ProductId = theSalesItem.ProductId,
                 SalesChecklistId = theSalesItem.SalesChecklistId
             };
         }
 
-        public SalesItem Find(int id)
+        private SalesItem Find(int id)
         {
             return _dbContext.SalesItems.Find(id);
         }

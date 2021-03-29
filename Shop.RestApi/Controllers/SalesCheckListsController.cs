@@ -30,7 +30,7 @@ namespace Shop.RestApi.Controllers
             return _service.GetAll();
         }
         [HttpGet("{id}")]
-        public GetSalesCheckListDto FindOneById(int id)
+        public GetOneSalesCheckListDto FindOneById(int id)
         {
             return _service.FindOneById(id);
         }
