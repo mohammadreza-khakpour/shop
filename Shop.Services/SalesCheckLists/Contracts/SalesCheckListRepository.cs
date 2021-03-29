@@ -5,7 +5,7 @@ namespace Shop.Services.SalesCheckLists.Contracts
 {
     public interface SalesCheckListRepository
     {
-        int Add(SalesCheckList salesCheckList);
+        SalesCheckList Add(SalesCheckList salesCheckList);
         void Delete(int id);
         SalesCheckList Find(int id);
         GetSalesCheckListDto FindOneById(int id);

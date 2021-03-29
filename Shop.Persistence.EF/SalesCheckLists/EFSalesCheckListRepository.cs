@@ -14,10 +14,10 @@ namespace Shop.Persistence.EF.SalesCheckLists
         {
             _dBContext = dBContext;
         }
-        public int Add(SalesCheckList salesCheckList)
+        public SalesCheckList Add(SalesCheckList salesCheckList)
         {
             var result = _dBContext.SalesCheckLists.Add(salesCheckList);
-            return result.Entity.Id;
+            return result.Entity;
         }
         public void Delete(int id)
         {

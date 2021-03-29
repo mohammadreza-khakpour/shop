@@ -1,4 +1,5 @@
 ﻿using Shop.Entities;
+using Shop.Services.SalesItems;
 using Shop.Services.SalesItems.Contracts;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,15 @@ namespace Shop.Persistence.EF.SalesItems
         {
             _dbContext = dbContext;
         }
-        public int Add(SalesItem salesItem)
+        public SalesItem Add(AddSalesItemDto salesItemDto)
         {
-            return _dbContext.SalesItems.Add(salesItem).Entity.Id;
+            SalesItem salesItem = new SalesItem() { 
+                ProductCode = salesItemDto.ProductCode,
+                ProductCount = salesItemDto.ProductCount,
+                ProductPrice = salesItemDto.ProductPrice,
+                ProductId = salesItemDto.ProductId
+            };
+            return salesItem;
         }
         public void Delete(int id)
         {

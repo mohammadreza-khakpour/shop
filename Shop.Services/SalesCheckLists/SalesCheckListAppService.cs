@@ -1,6 +1,8 @@
 ﻿using Shop.Entities;
 using Shop.Infrastructure;
 using Shop.Services.SalesCheckLists.Contracts;
+using Shop.Services.SalesItems;
+using Shop.Services.SalesItems.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,22 +12,34 @@ namespace Shop.Services.SalesCheckLists
     public class SalesCheckListAppService : SalesCheckListService
     {
         private SalesCheckListRepository _salesCheckListRepository;
+        private SalesItemRepository _salesItemRepository;
         private UnitOfWork _unitOfWork;
-        public SalesCheckListAppService(SalesCheckListRepository salesCheckListRepository, UnitOfWork unitOfWork)
+        public SalesCheckListAppService(
+            SalesCheckListRepository salesCheckListRepository, 
+            UnitOfWork unitOfWork, 
+            SalesItemRepository salesItemRepository)
         {
             _salesCheckListRepository = salesCheckListRepository;
             _unitOfWork = unitOfWork;
+            _salesItemRepository = salesItemRepository;
         }
         public int Add(AddSalesCheckListDto dto)
         {
             SalesCheckList salesCheckList = new SalesCheckList
             {
-                RecordDate = dto.RecordDate,
-                SerialNumber = dto.SerialNumber
+                RecordDate = DateTime.Parse(dto.RecordDate),
+                SerialNumber = dto.SerialNumber,
+                CustomerFullName = dto.CustomerFullName,
             };
-            var recordId = _salesCheckListRepository.Add(salesCheckList);
+            List<AddSalesItemDto> dtoSalesItems = dto.SalesItems;
+            dtoSalesItems.ForEach(dtoSaleItem=> 
+            {
+                SalesItem addedSalesItem = _salesItemRepository.Add(dtoSaleItem);
+                salesCheckList.Items.Add(addedSalesItem);
+            });
+            var record = _salesCheckListRepository.Add(salesCheckList);
             _unitOfWork.Complete();
-            return recordId;
+            return record.Id;
         }
         public void Update(int id, UpdateSalesCheckListDto dto)
         {

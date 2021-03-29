@@ -18,13 +18,13 @@ namespace Shop.Services.SalesItems
         }
         public int Add(AddSalesItemDto dto)
         {
-            SalesItem salesItem = new SalesItem
-            {
-                ProductCount = dto.ProductCount,
-                ProductId = dto.ProductId,
-                SalesChecklistId = dto.SalesChecklistId
-            };
-            var recordId = _salesItemRepository.Add(salesItem);
+            //SalesItem salesItem = new SalesItem
+            //{
+            //    ProductCount = dto.ProductCount,
+            //    ProductId = dto.ProductId,
+            //    SalesChecklistId = dto.SalesChecklistId
+            //};
+            var recordId = _salesItemRepository.Add(dto).Id;
             _unitOfWork.Complete();
             return recordId;
         }
