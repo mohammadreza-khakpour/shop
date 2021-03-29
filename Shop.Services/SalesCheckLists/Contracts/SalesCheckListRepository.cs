@@ -1,4 +1,5 @@
 ﻿using Shop.Entities;
+using Shop.Services.SalesItems;
 using System.Collections.Generic;
 
 namespace Shop.Services.SalesCheckLists.Contracts
@@ -11,5 +12,6 @@ namespace Shop.Services.SalesCheckLists.Contracts
         SalesCheckList FindAndRemoveSalesItems(int id);
         GetOneSalesCheckListDto FindOneById(int id);
         List<GetSalesCheckListDto> GetAll();
+        void CheckForProductSufficiency(AddSalesItemDto item);
     }
 }

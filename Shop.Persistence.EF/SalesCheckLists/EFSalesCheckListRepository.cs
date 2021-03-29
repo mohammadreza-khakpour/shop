@@ -1,6 +1,9 @@
-﻿using Shop.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Shop.Entities;
 using Shop.Services.SalesCheckLists;
 using Shop.Services.SalesCheckLists.Contracts;
+using Shop.Services.SalesCheckLists.Exceptions;
+using Shop.Services.SalesItems;
 using Shop.Services.SalesItems.Contracts;
 using System;
 using System.Collections.Generic;
@@ -47,7 +50,8 @@ namespace Shop.Persistence.EF.SalesCheckLists
         
         public GetOneSalesCheckListDto FindOneById(int id)
         {
-            var theSalesCheckList = _dBContext.SalesCheckLists.Find(id);
+            var xx = _dBContext.SalesCheckLists.Include(_=>_.Items);
+            var theSalesCheckList = xx.First(_=>_.Id==id);
             var items = new List<GetSalesItemDto>();
             items = theSalesCheckList.Items.Select(x=>new GetSalesItemDto {
                 Id = x.Id,
@@ -77,10 +81,20 @@ namespace Shop.Persistence.EF.SalesCheckLists
         {
             var salesChecklist = Find(id);
             salesChecklist.Items.Clear();
-            //salesChecklist.Items ;
             salesChecklist.OverAllProductPrice = 0;
             salesChecklist.OverAllProductCount = 0;
             return salesChecklist;
+        }
+
+        public void CheckForProductSufficiency(AddSalesItemDto item)
+        {
+            var res = _dBContext.Warehouses.Where(_=>_.ProductId==item.ProductId).ToList();
+            int totalCountInWarehouse = 0;
+            res.ForEach(_=>totalCountInWarehouse+=_.ProductCount);
+            if (totalCountInWarehouse < item.ProductCount)
+            {
+                throw new ProductCountIsNotEnoughInWarehousesException();
+            }
         }
     }
 }

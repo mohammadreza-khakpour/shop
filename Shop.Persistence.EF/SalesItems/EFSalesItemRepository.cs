@@ -28,9 +28,12 @@ namespace Shop.Persistence.EF.SalesItems
         }
         public void DeleteByCheckListId(int id)
         {
-            var res = _dbContext.SalesItems.Where(_ => _.SalesChecklistId == id).ToList();
-            res.RemoveRange(0,res.Count);
-
+            List<SalesItem> items = _dbContext.SalesItems.Where(_ => _.SalesChecklistId == id).ToList();
+            items.ForEach(item=> 
+            {
+                _dbContext.Warehouses.First(c => c.ProductId == item.ProductId).ProductCount += item.ProductCount;
+            });
+            items.RemoveRange(0,items.Count);
         }
         public List<GetSalesItemDto> GetAll()
         {

@@ -22,6 +22,7 @@ namespace Shop.RestApi.Controllers
         [HttpPost]
         public int Add([Required][FromBody] AddSalesCheckListDto dto)
         {
+            _service.CheckIfProductsCountAreEnough(dto.SalesItems);
             return _service.Add(dto);
         }
         [HttpGet]

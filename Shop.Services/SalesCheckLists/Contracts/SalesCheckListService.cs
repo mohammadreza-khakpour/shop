@@ -1,4 +1,5 @@
 ﻿using Shop.Services.SalesCheckLists.Contracts;
+using Shop.Services.SalesItems;
 using System.Collections.Generic;
 
 namespace Shop.Services.SalesCheckLists
@@ -10,5 +11,6 @@ namespace Shop.Services.SalesCheckLists
         GetOneSalesCheckListDto FindOneById(int id);
         List<GetSalesCheckListDto> GetAll();
         void Update(int id, UpdateSalesCheckListDto dto);
+        void CheckIfProductsCountAreEnough(List<AddSalesItemDto> salesItems);
     }
 }
