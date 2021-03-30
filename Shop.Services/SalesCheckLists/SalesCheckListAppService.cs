@@ -14,20 +14,16 @@ namespace Shop.Services.SalesCheckLists
     {
         private SalesCheckListRepository _salesCheckListRepository;
         private SalesItemRepository _salesItemRepository;
-        private WarehouseRepository _warehouseRepository;
         private UnitOfWork _unitOfWork;
         
-        public SalesCheckListAppService(
-            SalesCheckListRepository salesCheckListRepository, 
+        public SalesCheckListAppService(SalesCheckListRepository salesCheckListRepository,
             UnitOfWork unitOfWork, 
-            SalesItemRepository salesItemRepository,
-            WarehouseRepository warehouseRepository
+            SalesItemRepository salesItemRepository
             )
         {
             _salesCheckListRepository = salesCheckListRepository;
             _unitOfWork = unitOfWork;
             _salesItemRepository = salesItemRepository;
-            _warehouseRepository = warehouseRepository;
         }
         public int Add(AddSalesCheckListDto dto)
         {
@@ -39,7 +35,6 @@ namespace Shop.Services.SalesCheckLists
                 salesCheckList.Items.Add(SalesItem);
                 salesCheckList.OverAllProductCount += dtoSaleItem.ProductCount;
                 salesCheckList.OverAllProductPrice += dtoSaleItem.ProductPrice * dtoSaleItem.ProductCount;
-                _warehouseRepository.ManageWarehousesAgain(-dtoSaleItem.ProductCount,dtoSaleItem.ProductId);
             });
             _unitOfWork.Complete();
             return salesCheckList.Id;
@@ -50,8 +45,8 @@ namespace Shop.Services.SalesCheckLists
         }
         public int Update(int id, UpdateSalesCheckListDto dto)
         {
-            _salesItemRepository.DeleteByCheckListId(id);
             var salesChecklist = _salesCheckListRepository.FindAndRemoveSalesItems(id);
+            _salesItemRepository.DeleteAllItemsByCheckListId(id);
             salesChecklist.RecordDate = DateTime.Parse(dto.RecordDate);
             salesChecklist.SerialNumber = dto.SerialNumber;
             salesChecklist.CustomerFullName = dto.CustomerFullName;

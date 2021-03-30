@@ -13,5 +13,6 @@ namespace Shop.Services.SalesCheckLists.Contracts
         GetOneSalesCheckListDto FindOneById(int id);
         List<GetSalesCheckListDto> GetAll();
         void CheckForProductSufficiency(AddSalesItemDto item);
+        SalesCheckList FindWithItems(int checklistId);
     }
 }

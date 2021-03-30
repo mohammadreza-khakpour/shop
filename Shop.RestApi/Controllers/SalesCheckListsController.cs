@@ -2,6 +2,7 @@
 using Shop.Services.AccountingDocuments;
 using Shop.Services.SalesCheckLists;
 using Shop.Services.SalesCheckLists.Contracts;
+using Shop.Services.Warehouses;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,16 +18,21 @@ namespace Shop.RestApi.Controllers
         
         private SalesCheckListService _service;
         private AccountingDocumentService _accountingService;
-        public SalesCheckListsController(SalesCheckListService service, AccountingDocumentService accountingService)
+        private WarehouseService _warehouseService;
+        public SalesCheckListsController(SalesCheckListService service,
+            AccountingDocumentService accountingService, 
+            WarehouseService warehouseService)
         {
             _service = service;
             _accountingService = accountingService;
+            _warehouseService = warehouseService;
         }
         [HttpPost]
         public int Add([Required][FromBody] AddSalesCheckListDto dto)
         {
             _service.CheckIfProductsCountAreEnough(dto.SalesItems);
             int CheckListId =  _service.Add(dto);
+            _warehouseService.ForAllChecklistItemsManageWarehousesAgain(CheckListId);
             _accountingService.Add(CheckListId);
             return CheckListId;
         }
@@ -43,6 +49,7 @@ namespace Shop.RestApi.Controllers
         [HttpPut("{id}")]
         public void Update(int id, [FromBody] UpdateSalesCheckListDto dto)
         {
+            _warehouseService.PrepareWarehousesForChecklistUpdate(id);
             int CheckListId = _service.Update(id, dto);
             _accountingService.Add(CheckListId);
         }

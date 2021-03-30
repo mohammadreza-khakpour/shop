@@ -19,6 +19,7 @@ namespace Shop.Persistence.EF.SalesCheckLists
         {
             _dBContext = dBContext;
         }
+
         public SalesCheckList Add(AddSalesCheckListDto dto)
         {
             SalesCheckList salesCheckList = new SalesCheckList
@@ -95,6 +96,12 @@ namespace Shop.Persistence.EF.SalesCheckLists
             {
                 throw new ProductCountIsNotEnoughInWarehousesException();
             }
+        }
+
+        public SalesCheckList FindWithItems(int checklistId)
+        {
+            var res = _dBContext.SalesCheckLists.Include(x=>x.Items);
+            return res.First(x=>x.Id==checklistId);
         }
     }
 }

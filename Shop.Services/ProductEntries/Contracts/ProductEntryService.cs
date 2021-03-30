@@ -9,6 +9,6 @@ namespace Shop.Services.ProductEntries
         void Delete(int id);
         GetProductEntryDto FindOneById(int id);
         List<GetProductEntryDto> GetAll();
-        void Update(int id, UpdateProductEntryDto dto);
+        int Update(int id, UpdateProductEntryDto dto);
     }
 }

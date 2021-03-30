@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shop.Services.ProductEntries;
 using Shop.Services.ProductEntries.Contracts;
+using Shop.Services.Warehouses;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -14,9 +15,11 @@ namespace Shop.RestApi.Controllers
     public class ProductEntriesController : Controller
     {
         private ProductEntryService _service;
-        public ProductEntriesController(ProductEntryService service)
+        private WarehouseService _warehouseService;
+        public ProductEntriesController(ProductEntryService service, WarehouseService warehouseService)
         {
             _service = service;
+            _warehouseService = warehouseService;
         }
         [HttpPost]
         public int Add([Required][FromBody] AddProductEntryDto dto)
@@ -36,7 +39,8 @@ namespace Shop.RestApi.Controllers
         [HttpPut("{id}")]
         public void Update(int id, [FromBody] UpdateProductEntryDto dto)
         {
-            _service.Update(id, dto);
+            int countDiffer = _service.Update(id, dto);
+            _warehouseService.ManageWarehousesAgain(countDiffer,dto.ProductId);
         }
         [HttpDelete("{id}")]
         public void Delete(int id)

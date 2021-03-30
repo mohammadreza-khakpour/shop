@@ -26,14 +26,9 @@ namespace Shop.Persistence.EF.SalesItems
             };
             return salesItem;
         }
-        public void DeleteByCheckListId(int id)
+        public void DeleteAllItemsByCheckListId(int id)
         {
-            List<SalesItem> items = _dbContext.SalesItems.Where(_ => _.SalesChecklistId == id).ToList();
-            items.ForEach(item=> 
-            {
-                _dbContext.Warehouses.First(c => c.ProductId == item.ProductId).ProductCount += item.ProductCount;
-            });
-            items.RemoveRange(0,items.Count);
+            _dbContext.SalesItems.Where(saleItem => saleItem.SalesChecklistId == id).ToList().Clear();
         }
         public List<GetSalesItemDto> GetAll()
         {
