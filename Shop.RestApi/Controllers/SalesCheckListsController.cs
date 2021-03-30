@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Shop.Services.AccountingDocuments;
 using Shop.Services.SalesCheckLists;
 using Shop.Services.SalesCheckLists.Contracts;
 using System;
@@ -15,15 +16,19 @@ namespace Shop.RestApi.Controllers
     {
         
         private SalesCheckListService _service;
-        public SalesCheckListsController(SalesCheckListService service)
+        private AccountingDocumentService _accountingService;
+        public SalesCheckListsController(SalesCheckListService service, AccountingDocumentService accountingService)
         {
             _service = service;
+            _accountingService = accountingService;
         }
         [HttpPost]
         public int Add([Required][FromBody] AddSalesCheckListDto dto)
         {
             _service.CheckIfProductsCountAreEnough(dto.SalesItems);
-            return _service.Add(dto);
+            int CheckListId =  _service.Add(dto);
+            _accountingService.Add(CheckListId);
+            return CheckListId;
         }
         [HttpGet]
         public List<GetSalesCheckListDto> GetAll()
@@ -38,7 +43,8 @@ namespace Shop.RestApi.Controllers
         [HttpPut("{id}")]
         public void Update(int id, [FromBody] UpdateSalesCheckListDto dto)
         {
-            _service.Update(id, dto);
+            int CheckListId = _service.Update(id, dto);
+            _accountingService.Add(CheckListId);
         }
         [HttpDelete("{id}")]
         public void Delete(int id)

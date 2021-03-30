@@ -13,6 +13,6 @@ namespace Shop.Entities
         public int OverAllProductCount { get; set; }
         public double OverAllProductPrice { get; set; }
         public HashSet<SalesItem> Items { get; set; } = new HashSet<SalesItem>();
-        public HashSet<AccountingDocument> Documents { get; set; } = new HashSet<AccountingDocument>();
+        //public HashSet<AccountingDocument> Documents { get; set; } = new HashSet<AccountingDocument>();
     }
 }

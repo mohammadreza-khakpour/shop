@@ -48,7 +48,7 @@ namespace Shop.Services.SalesCheckLists
         {
             return _salesCheckListRepository.GetAll();
         }
-        public void Update(int id, UpdateSalesCheckListDto dto)
+        public int Update(int id, UpdateSalesCheckListDto dto)
         {
             _salesItemRepository.DeleteByCheckListId(id);
             var salesChecklist = _salesCheckListRepository.FindAndRemoveSalesItems(id);
@@ -64,6 +64,7 @@ namespace Shop.Services.SalesCheckLists
                 salesChecklist.OverAllProductPrice += SalesItem.ProductPrice * SalesItem.ProductCount;
             }
             _unitOfWork.Complete();
+            return salesChecklist.Id;
         }
         public void Delete(int id)
         {

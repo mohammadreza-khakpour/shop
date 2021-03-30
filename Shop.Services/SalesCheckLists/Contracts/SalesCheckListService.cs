@@ -10,7 +10,7 @@ namespace Shop.Services.SalesCheckLists
         void Delete(int id);
         GetOneSalesCheckListDto FindOneById(int id);
         List<GetSalesCheckListDto> GetAll();
-        void Update(int id, UpdateSalesCheckListDto dto);
+        int Update(int id, UpdateSalesCheckListDto dto);
         void CheckIfProductsCountAreEnough(List<AddSalesItemDto> salesItems);
     }
 }

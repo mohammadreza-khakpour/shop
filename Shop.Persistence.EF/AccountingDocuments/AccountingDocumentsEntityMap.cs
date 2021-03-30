@@ -16,8 +16,7 @@ namespace Shop.Persistence.EF.AccountingDocuments
             builder.Property(_ => _.SerialNumber).HasMaxLength(20);
             builder.Property(_ => _.SalesCheckListSerialNumber).HasMaxLength(20);
             builder.Property(_ => _.SalesCheckListOverallPrice);
-            builder.HasOne(_ => _.SalesCheckList).WithMany(_ => _.Documents)
-                .HasForeignKey(_ => _.SalesCheckListId).OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(_ => _.SalesCheckList);
         }
     }
 }
